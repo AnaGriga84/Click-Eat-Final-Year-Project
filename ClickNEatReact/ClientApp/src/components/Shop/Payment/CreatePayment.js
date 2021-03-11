@@ -94,7 +94,7 @@ const CreatePayment = (props) => {
                         }
                     }
                 },
-                    //https://developers.braintreepayments.com/guides/hosted-fields/setup-and-integration/javascript/v3
+                    //<seehttps://developers.braintreepayments.com/guides/hosted-fields/setup-and-integration/javascript/v3
 
                     function (hostedFieldsErr, hostedFieldsInstance) {
                         if (hostedFieldsErr) {

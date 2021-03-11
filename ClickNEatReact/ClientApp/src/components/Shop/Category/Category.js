@@ -6,8 +6,6 @@ import CategoryServices from '../../../services/CategoryServices';
 import CreateCategory from './CreateCategory';
 import EditCategory from './EditCategory';
 
-
-
 export default class Category extends Component
 {
 
@@ -75,7 +73,7 @@ export default class Category extends Component
             return (
                 <Modal returnFocusAfterClose={true} isOpen={this.state.isModalOpen} className="modal-dialog-centered" >
                     <ModalHeader className= "text-danger">
-                        <FontAwesomeIcon  icon={faExclamationCircle} size={"lg"}/> Are you sure to delete this category?
+                        <FontAwesomeIcon  icon={faExclamationCircle} size={"lg"}/> Are you sure you want to delete this category?
                     </ModalHeader>
                     <ModalBody>
                         <Row>

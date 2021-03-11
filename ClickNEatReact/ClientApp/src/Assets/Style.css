@@ -1,27 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-.btn-login{
-    border-radius: 12px !important;
-    background-color: rgba(255,255,255,.1) !important;
-    border: 1px solid rgba(255,255,255,.3) !important;
-    color: #ffffff !important;
-}
-.btn-join{
-    color: #ffffff !important;
-    text-align: center !important;
-    border-radius: 10px !important;
-    background-color: rgba(255,255,255,.1) !important;
-    border: 2px solid rgba(255,255,255,.3) !important;
-}
-
-
-.player{
-    max-width: 100%;
-    max-height:80px;
-    border-radius:5px !important;
-    border: 2px solid !important;
-    border-color: white;
-}
-
 .text-purple{
     color: #5D006B !important;
 }
@@ -57,8 +34,7 @@
     align-items: center;
     border: solid 1px;
     border-radius: 5px;
-    overflow-x:hidden;
-    
+    overflow-x:hidden;  
 }
 
 .input-group input {

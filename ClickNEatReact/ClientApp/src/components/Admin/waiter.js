@@ -65,7 +65,7 @@ export default class Waiter extends Component {
             return (
                 <Modal returnFocusAfterClose={true} isOpen={this.state.isModalOpen} className="modal-dialog-centered" >
                     <ModalHeader className="text-danger">
-                        <FontAwesomeIcon icon={faExclamationCircle} size={"lg"} /> Are you sure to delete the waiter account?
+                        <FontAwesomeIcon icon={faExclamationCircle} size={"lg"} /> Are you sure you want to delete the waiter account?
                     </ModalHeader>
                     <ModalBody>
                         <Row>

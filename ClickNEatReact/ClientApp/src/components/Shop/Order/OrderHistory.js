@@ -200,7 +200,7 @@ class OrderHistory extends Component {
                                                                                 <CardImg src={orderItem.menuItem.imgPath} className="h-100" style={{ objectFit: "cover" }} />
                                                                                 <CardImgOverlay className='text-center'>
                                                                                     <CardTitle className="bg-light mt-auto mb-auto">{orderItem.menuItem.name}</CardTitle>
-                                                                                    <CardText className="bg-light">Quanitity:  {orderItem.itemAmmount}</CardText>
+                                                                                    <CardText className="bg-light">Quantity:  {orderItem.itemAmmount}</CardText>
                                                                                 </CardImgOverlay>
                                                                             </Card>
                                                                         </Col>
@@ -257,7 +257,7 @@ class OrderHistory extends Component {
                                                                             <CardImg src={orderItem.menuItem.imgPath} className="h-100" style={{ objectFit: "cover" }} />
                                                                             <CardImgOverlay className='text-center'>
                                                                                 <CardTitle className="bg-light mt-auto mb-auto">{orderItem.menuItem.name}</CardTitle>
-                                                                                <CardText className="bg-light">Quanitity:  {orderItem.itemAmmount}</CardText>
+                                                                                <CardText className="bg-light">Quantity:  {orderItem.itemAmmount}</CardText>
                                                                                 {orderItem.isReviewed != true &&
                                                                                     <Button onClick={() => this.reviewItem(orderItem)} className={'btn btn-success'} >Give feedback</Button>
                                                                                 }
