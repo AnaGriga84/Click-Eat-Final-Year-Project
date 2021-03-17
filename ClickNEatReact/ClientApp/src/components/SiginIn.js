@@ -55,13 +55,13 @@ export class SignIn extends Component {
                 this.props.setLoggedIn(true);
                 //console.log(this);
                 if (data.type.toLowerCase() === 'admin') {
-                    window.location.href = '/dashboard';
+                    window.location.href = '/Analytics';
                 }
                 else if (data.type.toLowerCase() === 'waiter') {
-                    window.location.href = '/dashboard';
+                    window.location.href = '/Analytics';
                 }
                 else {
-                    window.location.href = '/dashboard'
+                    window.location.href = '/'
                 }
             }
         }

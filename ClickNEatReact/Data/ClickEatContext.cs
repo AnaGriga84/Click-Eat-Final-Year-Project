@@ -20,6 +20,9 @@ namespace ClickNEatReact.Data
             builder.Entity<ItemReview>()
             .Property(b => b.CreatedAt)
             .HasDefaultValueSql("getdate()");
+            builder.Entity<Payment>()
+            .Property(p => p.CreatedAt)
+            .HasDefaultValueSql("getdate()");
 
         }
 

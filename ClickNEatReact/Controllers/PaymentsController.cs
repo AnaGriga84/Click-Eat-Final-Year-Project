@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ClickNEatReact.Data;
 using ClickNEatReact.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace ClickNEatReact.Controllers
 {
@@ -20,6 +21,23 @@ namespace ClickNEatReact.Controllers
         public PaymentsController(ClickEatContext context)
         {
             _context = context;
+        }
+
+
+        [Authorize(Roles = UserRole.Admin + ","+UserRole.Waiter)]
+        // GET: api/Payments
+        [HttpGet("period/{period}")]
+        public async Task<ActionResult<IEnumerable<Payment>>> GetPaymentByPeriod(string period)
+        {
+            if(period.Equals("1"))
+                return await _context.Payment.Include(p => p.order).ThenInclude(o => o.OrderItems).ThenInclude(o => o.MenuItem).ThenInclude(m => m.MenuCategory).Where(p => p.CreatedAt.Date == DateTime.Now.Date).ToListAsync();
+            else if (period.Equals("7"))
+                return await _context.Payment.Include(p => p.order).ThenInclude(o => o.OrderItems).ThenInclude(o => o.MenuItem).ThenInclude(m => m.MenuCategory).Where(p => (p.CreatedAt.Date <= DateTime.Now.Date) && (p.CreatedAt.Date > DateTime.Now.AddDays(-7))).ToListAsync();
+            else if (period.Equals("30"))
+                return await _context.Payment.Include(p => p.order).ThenInclude(o => o.OrderItems).ThenInclude(o => o.MenuItem).ThenInclude(m => m.MenuCategory).Where(p => (p.CreatedAt.Date <= DateTime.Now.Date) && (p.CreatedAt.Date > DateTime.Now.AddDays(-30))).ToListAsync();
+            else
+                return await _context.Payment.Include(p => p.order).ThenInclude(o => o.OrderItems).ThenInclude(o => o.MenuItem).ThenInclude(m => m.MenuCategory).Where(p => (p.CreatedAt.Year == DateTime.Now.Year)).ToListAsync();
+
         }
 
         [Authorize(Roles =UserRole.Admin)]

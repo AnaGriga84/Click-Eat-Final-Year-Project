@@ -19,6 +19,8 @@ namespace ClickNEatReact.Models
         public string CardNumber { set; get; }
         public string ExpireDate { set; get; }
         public string CVV { set; get; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { set; get; }
         public int OrderId { set; get; }
         [ForeignKey("OrderId")]
         [XmlIgnore, JsonIgnore]

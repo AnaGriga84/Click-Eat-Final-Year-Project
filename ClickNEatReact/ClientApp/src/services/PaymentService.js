@@ -15,6 +15,17 @@ class PaymentService {
 
     }
 
+    getSalesByPeriod(period) {
+        var config = {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+
+        return axios.get('/api/Payments/period/' + period, config);
+
+    }
+
     insertPayment(payment) {
         
         return axios.post('/api/Payments', payment);

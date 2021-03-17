@@ -39,19 +39,17 @@ function EditMenuItem(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        let menuItem = props.menu;
-        menuItem.name = name;
-        menuItem.description = description;
-        menuItem.price = price;
-        menuItem.imgPath = imgPath;
-        menuItem.availability = availability;
-        menuItem.categoryId = categoryId;
-        menuItem.allergens = allergens;
-        menuItem.menuCategory = null;
         
-
-        
+        let menuItem = {
+            "menuItemId": props.menu.menuItemId,
+            "name": name,
+            "description": description,
+            "price": price,
+            "imgPath": imgPath,
+            "availability": availability,
+            "categoryId": categoryId,
+            "allergens": allergens
+        }
 
         MenuItemService.updateMenuItem(menuItem).then(function (resp) {
             console.log(resp)

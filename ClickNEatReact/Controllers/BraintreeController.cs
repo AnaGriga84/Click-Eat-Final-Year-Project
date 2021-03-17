@@ -21,10 +21,8 @@ namespace ClickNEatReact.Controllers
         public BraintreeController(IConfiguration configuration)
         {
             _configuration = configuration;
-            //configure the environment and API credentials
             gateway = new BraintreeGateway
             {
-                //MerchantId, PublicKey, PrivateKey added in appsettings.json
                 Environment = Braintree.Environment.SANDBOX,
                 MerchantId = _configuration["Braintree:MerchantId"],
                 PublicKey = _configuration["Braintree:PublicKey"],
@@ -33,19 +31,16 @@ namespace ClickNEatReact.Controllers
             
         }
 
-
-        //server is responsabile for generating a client token which contains all authorization and 
-        //configuration information the client needs to initialize the client SDK to comunicate with Braintree
         [HttpGet]
         public ObjectResult GetClientToken()
         {
-            var token = gateway.ClientToken.Generate(); //ClientToken from IBraintreegateway interface
+            var token = gateway.ClientToken.Generate();
             
             return Ok(new{ token = token });
         }
 
         [HttpPost]
-        public ObjectResult Transaction([FromBody] TransactionData data) //[FromBody] Gets values from the request body.
+        public ObjectResult Transaction([FromBody] TransactionData data)
         {
             var req = new TransactionRequest
             {

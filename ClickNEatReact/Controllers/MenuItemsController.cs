@@ -9,8 +9,6 @@ using ClickNEatReact.Data;
 using ClickNEatReact.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
-//using ClickNEatReact.Services;
-using Microsoft.Extensions.Configuration;
 
 namespace ClickNEatReact.Controllers
 {

@@ -2,8 +2,7 @@
   "name": "clickneatreact",
   "version": "0.1.0",
   "private": true,
-  "dependencies": 
-  {
+  "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
@@ -36,8 +35,7 @@
     "eslint-plugin-react": "^7.18.3",
     "nan": "^2.14.1"
   },
-  "eslintConfig": 
-  {
+  "eslintConfig": {
     "extends": "react-app"
   },
   "scripts": {
@@ -47,9 +45,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src/"
   },
-
-  "browserslist": 
-  {
+  "browserslist": {
     "production": [
       ">0.2%",
       "not dead",

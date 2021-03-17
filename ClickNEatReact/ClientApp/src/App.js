@@ -6,14 +6,16 @@ import './custom.css'
 import { SignIn } from './components/SiginIn';
 import { AuthContext } from './context/auth';
 import PrivateRoute from './_component/PrivateRoute';
-import Dashboard from './components/Shop/Dashboard';
-import Category from './components/Shop/Category/Category';
-import MenuItem from './components/Shop/MenuItem/MenuItems';
+import Dashboard from './components/Management/Analytics';
+import Category from './components/Management/Category/Category';
+import MenuItem from './components/Management/MenuItem/MenuItems';
 import Waiter from './components/Admin/waiter';
-import Orders from './components/Shop/Order/Order';
-import SelectedItem from './components/Shop/MenuItem/selectedItem';
+import Orders from './components/Management/Order/Order';
+import SelectedItem from './components/Management/MenuItem/selectedItem';
 import '../src/Assets/fontawesome/css/all.css';
-import OrderHistory from './components/Shop/Order/OrderHistory';
+import OrderHistory from './components/Management/Order/OrderHistory';
+import SignUp from './components/SignUp';
+import Analytics from './components/Management/Analytics';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -35,6 +37,10 @@ export default class App extends Component {
         this.setLoggedIn(localStorage.getItem('loggedIn'));
         let count = localStorage.getItem('dishItemCount') != undefined ? localStorage.getItem('dishItemCount') : 0;
         this.setState({ count: parseInt(count) });
+        window.addEventListener("resize", () => window.location.reload(false));
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', () => window.location.reload(false));
     }
 
     async setType(type) {
@@ -78,19 +84,20 @@ export default class App extends Component {
                 )
 
         }
-
+        
         return (
 
             <Layout>
+                
                 <AuthContext.Provider value={(this.state.type == 'admin' && this.state.loggedin)}>
 
                     <Switch>
                         <Route exact path='/'><Home selectMenuItem={this.selectMenuItem} /></Route>
                         <Route exact path='/signin' setType={this.setType} ><SignIn setType={this.setType} setLoggedIn={this.setLoggedIn} /></Route>
+                        <Route exact path='/signup'  ><SignUp /></Route>
                         <Route exact path='/signout' component={SignOut} />
                         <Route exact path='/dish'  ><SelectedItem updateThis={this.updateThis} /> </Route>
                         <Route exact path='/orderHistory'  ><OrderHistory /> </Route>
-                        <PrivateRoute exact path='/dashboard' component={Dashboard} />
                         <PrivateRoute exact path='/category' component={Category} />
                         <PrivateRoute exact path='/menuItems' component={MenuItem} />
                         <PrivateRoute exact path='/waiters' component={Waiter} />
@@ -99,9 +106,10 @@ export default class App extends Component {
                 <AuthContext.Provider value={((this.state.type == 'admin' || this.state.type == 'waiter') && this.state.loggedin)}>
                     <Switch>
                         <PrivateRoute exact path='/orders' component={Orders} />
+                        <PrivateRoute exact path='/analytics' component={Analytics} />
                     </Switch>
                 </AuthContext.Provider>
-
+                    
             </Layout>
 
         );

@@ -1,4 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.btn-login{
+    border-radius: 12px !important;
+    background-color: rgba(255,255,255,.1) !important;
+    border: 1px solid rgba(255,255,255,.3) !important;
+    color: #ffffff !important;
+}
+.btn-join{
+    color: #ffffff !important;
+    text-align: center !important;
+    border-radius: 10px !important;
+    background-color: rgba(255,255,255,.1) !important;
+    border: 2px solid rgba(255,255,255,.3) !important;
+}
+
+
+.player{
+    max-width: 100%;
+    max-height:80px;
+    border-radius:5px !important;
+    border: 2px solid !important;
+    border-color: white;
+}
+
 .text-purple{
     color: #5D006B !important;
 }
@@ -34,7 +57,8 @@
     align-items: center;
     border: solid 1px;
     border-radius: 5px;
-    overflow-x:hidden;  
+    overflow-x:hidden;
+    
 }
 
 .input-group input {
@@ -74,6 +98,7 @@
     color: #5D006B;
     border-color: #5D006B;
 }
+
 .custom .btn-outline-primary {
     color: #5D006B !important;
     background-color: white !important;
@@ -84,6 +109,20 @@
     background-color: #5D006B !important;
     color: white !important;
     border-color: #5D006B !important;
+}
+
+.custom .btn-select.btn-outline-primary {
+    color: #5D006B !important;
+    background-color: transparent !important;
+    border-color: #5D006B !important;
+    font-weight:700 !important;
+}
+
+.custom .btn-select.btn-outline-primary:hover {
+    background-color: #5D006B !important;
+    color: white !important;
+    border-color: #5D006B !important;
+    font-weight: 700 !important;
 }
 
 .custom .active{
@@ -312,12 +351,26 @@ body {
 .cursor-pointer{
     cursor: pointer;
 }
+body {
+    overflow: hidden;
+}
 
+.main {
+   overflow-x:hidden;
+    overflow-y: auto;
+    
+}
 *{
     -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
-    display: none ;
+    width: 6px;
+    /*margin-top:50px;*/
+}
+
+.form-control.qty{
+    min-width:30% !important;
+    width:30%
 }
 /* width */
 /*::-webkit-scrollbar {*/
@@ -328,6 +381,7 @@ body {
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 4px grey;
     border-radius: 8px;
+    margin-top: 15px;
 }
 
 /* Handle */

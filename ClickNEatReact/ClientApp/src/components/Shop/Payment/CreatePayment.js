@@ -1,6 +1,6 @@
 ﻿import { faCalendarAlt, faCreditCard, faEuroSign, faInfoCircle, faShieldAlt, faUser, } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { Component, useEffect, useState } from 'react';  //get the React object from the react module
+import React, { Component, useEffect, useState } from 'react';
 import { Alert, Button, Col, Form, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import SelectedItem from '../MenuItem/selectedItem';
 import { formatCreditCardNumber, formatCVC, formatExpirationDate, formatFormData } from '../../../util/utils'
@@ -40,8 +40,8 @@ const CreatePayment = (props) => {
                 // Handle error in creation of data collector
                 return;
             }
-            // At this point, I should access the dataCollectorInstance.deviceData value and provide it
-            // to the server, e.g. by injecting it into your form as a hidden input.
+            // At this point, you should access the dataCollectorInstance.deviceData value and provide it
+            // to your server, e.g. by injecting it into your form as a hidden input.
             var deviceData = dataCollectorInstance.deviceData;
 
 
@@ -50,11 +50,10 @@ const CreatePayment = (props) => {
             }, function (clientErr, clientInstance) {
                 if (clientErr) {
                     console.error(clientErr);
-                     // Handle error in client creation
                     return;
                 }
 
-                // This example shows Hosted Fields, but we can also use this
+                // This example shows Hosted Fields, but you can also use this
                 // client instance to create additional components here, such as
                 // PayPal or Data Collector.
 
@@ -94,7 +93,7 @@ const CreatePayment = (props) => {
                         }
                     }
                 },
-                    //<seehttps://developers.braintreepayments.com/guides/hosted-fields/setup-and-integration/javascript/v3
+
 
                     function (hostedFieldsErr, hostedFieldsInstance) {
                         if (hostedFieldsErr) {
@@ -156,7 +155,6 @@ const CreatePayment = (props) => {
 
 
                                     }).catch(function (error) {
-                                        alert("Transaction failed");
                                         console.log(error.response);
                                     })
                                         
@@ -258,7 +256,7 @@ const CreatePayment = (props) => {
             console.log(resp);
             setMsg(<><div>Order placed successfully!!</div>
                 <div>Your order will be served in a while!!</div>
-                <div><a href="/" className="text-decoration-none text-purple font-weight-bold">Go back to your order</a></div></>);
+                <div><a href="/" className="text-decoration-none text-purple font-weight-bold">Go back to menu items</a></div></>);
             setVisible(true);
             let orderIds = localStorage.getItem('orderIds') != undefined ? localStorage.getItem('orderIds') : "";
 
@@ -322,7 +320,107 @@ const CreatePayment = (props) => {
     return (
 
         <>
+            {/* <>
+            <form onSubmit={handleSubmit}>
+                
+                <div>
+                    Total: {total} <FontAwesomeIcon icon={faEuroSign} />
+                </div>
+                <div className=" form-group">
+
+                    <div className="input-group">
+                        <span>
+
+                            <FontAwesomeIcon icon={faUser} />
+                            <input type="text"
+                                defaultValue={cardHolderName}
+                                required
+                                name="name"
+                                className="form-control"
+                                placeholder={"Card Holder Name"}
+                                onChange={(e) => setCardHolder(e.target.value)}
+
+                            />
+
+                        </span>
+                    </div>
+
+                </div>
+                <div className="form-group">
+                    <div className="input-group">
+                        <span>
+
+                            <i className={
+                                cardNumber[0] == '4' ? "fab fa-cc-visa" :
+                                    cardNumber[0] == '5' ? "fab fa-cc-mastercard" :
+                                        cardNumber[0] == '6' ? "fab fa-cc-discover" :
+                                            cardNumber[0] == '3' && (cardNumber[1] == '4' || cardNumber[1] == '7') ? "fab fa-cc-amex" :
+                                                "fas fa-credit-card"
+                            } ></i>
+                            <input type="tel"
+                                name="number"
+                                pattern="[\d| ]{16,22}"
+                                defaultValue={cardNumber}
+                                required
+                                className="form-control"
+                                placeholder={"Card Number"}
+                                onChange={handleInputChange}
+
+                            />
+
+                        </span>
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <div className="col-4">
+                        <div className="input-group">
+                            <span>
+
+                                <FontAwesomeIcon icon={faShieldAlt} />
+                                <input type="tel"
+                                    name="cvc"
+                                    defaultValue={cardCVC}
+                                    required
+                                    className="form-control"
+                                    placeholder={"CVC"}
+                                    pattern="\d{3,4}"
+                                    onChange={handleInputChange}
+
+                                />
+
+                            </span>
+                        </div>
+                    </div>
+                    <div className="col-8">
+                        <div className="input-group">
+                            <span>
+
+                                <FontAwesomeIcon icon={faCalendarAlt} />
+                                <input type="tel"
+                                    name="expiry"
+                                    pattern="\d\d/\d\d"
+                                    defaultValue={cardExpireDate}
+                                    required
+                                    className="form-control"
+                                    placeholder={"Expire Date"}
+                                    onChange={handleInputChange}
+
+                                />
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="text-center custom">
+                    <input type="submit" value="Place Order" className="btn btn-outline-primary" />
+                </div>
+            </form>
+            <ConfirmModal />
+            <SuccessModal />
             
+        </>*/}
 
             <div className='demo-frame'>
 
@@ -360,4 +458,4 @@ const CreatePayment = (props) => {
 
 }
 
-export default CreatePayment; //exports a single class, function or primitive from a script file
+export default CreatePayment;

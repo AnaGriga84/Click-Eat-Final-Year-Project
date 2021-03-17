@@ -36,6 +36,8 @@ namespace ClickNEatReact
         public void ConfigureServices(IServiceCollection services)
         {
 
+            
+
             services.AddControllersWithViews();
                 
             services.AddDbContext<ClickEatContext>(options =>
@@ -45,7 +47,6 @@ namespace ClickNEatReact
                 .AddEntityFrameworkStores<ClickEatContext>()
                 .AddDefaultTokenProviders();
 
-            //<seehttps://wildermuth.com/2018/04/10/Using-JwtBearer-Authentication-in-an-API-only-ASP-NET-Core-Project
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

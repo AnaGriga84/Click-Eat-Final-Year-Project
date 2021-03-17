@@ -20,6 +20,7 @@ namespace ClickNEatReact.Models
         public double price { set; get; }
         public string OrderItemStatus { set; get; }
         public bool IsReviewed { set; get; }
+        public string Instruction { set; get; }
         public int MenuItemId { set; get; }
         [ForeignKey("MenuItemId")]
 

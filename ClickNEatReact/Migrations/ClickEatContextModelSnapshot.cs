@@ -211,6 +211,9 @@ namespace ClickNEatReact.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Instruction")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsReviewed")
                         .HasColumnType("bit");
 
@@ -256,6 +259,11 @@ namespace ClickNEatReact.Migrations
 
                     b.Property<string>("CardNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("ExpireDate")
                         .HasColumnType("nvarchar(max)");

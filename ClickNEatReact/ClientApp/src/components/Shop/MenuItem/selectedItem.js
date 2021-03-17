@@ -211,7 +211,6 @@ export default class SelectedItem extends Component {
 
     }
 
-
     render() {
 
         const PaymentModal = () => {
@@ -242,7 +241,7 @@ export default class SelectedItem extends Component {
 
                     < Row className="mt-4">
                         <Col xs={12} md={6} lg={8}>
-                            <h4>Your Order</h4>
+                            <h4>Dish</h4>
                             <Row className="overflow-auto " style={{ height: '350px' }}>
                                 {
                                     Object.keys(this.state.selectedItems).map((key) =>
@@ -290,7 +289,7 @@ export default class SelectedItem extends Component {
                                                 <tr>
                                                     <td colSpan="2">
                                                         <div className="mb-2">
-                                                            Special Instructions
+                                                            Special Instruciton
                                                     <textarea className='form-control' onChange={(e) => this.setState({ instruction: e.target.value })}></textarea>
                                                         </div>
                                                         <div>

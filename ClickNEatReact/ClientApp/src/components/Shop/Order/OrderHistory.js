@@ -1,10 +1,9 @@
 ﻿import React, { Component } from "react";
 import OrderService from "../../../services/OrderService";
-import { Badge, Button, Card, CardBody, CardHeader, CardImg, CardImgOverlay, CardText, CardTitle, Col, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, CardImg, CardImgOverlay, CardText, CardTitle, Col, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
 import DuePayment from "../Payment/DuePayment";
 import { Link } from "react-router-dom";
 import BraintreeService from "../../../services/BraintreeService";
-import CreateReview from "../Review/CreateReview";
 
 
 
@@ -17,43 +16,16 @@ class OrderHistory extends Component {
             served: [],
             current: [],
             isOpen: false,
-            isFeedbackOpen: false,
             order: {
                 total: 0,
                 orderId: 0,
-                token: ""
-
-            },
-            orderItem: {
-                orderItemId: 0,
-                itemAmmount: 0,
-                price: 0,
-                orderItemStatus: "string",
-                isReviewed: true,
-                menuItemId: 0,
-                menuItem: {
-                    menuItemId: 0,
-                    name: "string",
-                    description: "string",
-                    price: 0,
-                    avgRate: 0,
-                    imgPath: "string",
-                    availability: true,
-                    allergens: "string",
-                    categoryId: 0,
-                    menuCategory: {
-                        categoryId: 0,
-                        name: "string"
-                    }
-                }
+                token:""
+            
             }
         }
         this.getPreviousOrders = this.getPreviousOrders.bind(this);
         this.payNow = this.payNow.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.toggleFeedbackModal = this.toggleFeedbackModal.bind(this);
-        this.reviewItem = this.reviewItem.bind(this);
-        this.toggleOnSubmitFeedback = this.toggleOnSubmitFeedback.bind(this);
     }
 
     componentDidMount() {
@@ -86,8 +58,6 @@ class OrderHistory extends Component {
 
     }
 
-
-
     async payNow(order) {
         console.log(order);
         let self = this;
@@ -104,25 +74,8 @@ class OrderHistory extends Component {
         this.toggleModal();
     }
 
-    async reviewItem(orderItem) {
-        await this.setState({ orderItem: orderItem });
-        this.toggleFeedbackModal();
-
-    }
-
-
-
     toggleModal() {
         this.setState({ isOpen: !this.state.isOpen });
-    }
-    toggleFeedbackModal() {
-        this.setState({ isFeedbackOpen: !this.state.isFeedbackOpen });
-        
-    }
-
-    toggleOnSubmitFeedback() {
-        this.getPreviousOrders();
-        this.setState({ isFeedbackOpen: !this.state.isFeedbackOpen });
     }
 
     render() {
@@ -137,22 +90,6 @@ class OrderHistory extends Component {
                         </ModalHeader>
                         <ModalBody>
                             <DuePayment order={this.state.order} />
-                        </ModalBody>
-                    </div>
-                </Modal>
-            )
-        }
-
-        const FeedbackModal = () => {
-            return (
-                <Modal className={" rounded text-purple"} isOpen={this.state.isFeedbackOpen} centered scrollable backdrop="static"  >
-                    <div className="shadow-custom">
-
-                        <ModalHeader toggle={this.toggleFeedbackModal}>
-                            <div className="h3">Your Feedback</div>
-                        </ModalHeader>
-                        <ModalBody>
-                            <CreateReview orderItem={this.state.orderItem} toggle={this.toggleOnSubmitFeedback} />
                         </ModalBody>
                     </div>
                 </Modal>
@@ -200,7 +137,7 @@ class OrderHistory extends Component {
                                                                                 <CardImg src={orderItem.menuItem.imgPath} className="h-100" style={{ objectFit: "cover" }} />
                                                                                 <CardImgOverlay className='text-center'>
                                                                                     <CardTitle className="bg-light mt-auto mb-auto">{orderItem.menuItem.name}</CardTitle>
-                                                                                    <CardText className="bg-light">Quantity:  {orderItem.itemAmmount}</CardText>
+                                                                                    <CardText className="bg-light">Quanitity:  {orderItem.itemAmmount}</CardText>
                                                                                 </CardImgOverlay>
                                                                             </Card>
                                                                         </Col>
@@ -241,7 +178,6 @@ class OrderHistory extends Component {
                                                                 <em>Table:</em> {order.tableIdentity}<br />
                                                                 <em>Instruction:</em> {order.instruction}<br />
                                                                 <em>Status:</em> {order.status}
-
                                                             </div>
                                                             <div className="col-6 align-middle custom d-flex justify-content-end align-content-center">
                                                                 <div className="display-4"><Badge color="success">Served</Badge></div>
@@ -257,10 +193,7 @@ class OrderHistory extends Component {
                                                                             <CardImg src={orderItem.menuItem.imgPath} className="h-100" style={{ objectFit: "cover" }} />
                                                                             <CardImgOverlay className='text-center'>
                                                                                 <CardTitle className="bg-light mt-auto mb-auto">{orderItem.menuItem.name}</CardTitle>
-                                                                                <CardText className="bg-light">Quantity:  {orderItem.itemAmmount}</CardText>
-                                                                                {orderItem.isReviewed != true &&
-                                                                                    <Button onClick={() => this.reviewItem(orderItem)} className={'btn btn-success'} >Give feedback</Button>
-                                                                                }
+                                                                                <CardText className="bg-light">Quanitity:  {orderItem.itemAmmount}</CardText>
                                                                             </CardImgOverlay>
                                                                         </Card>
                                                                     </Col>
@@ -281,7 +214,6 @@ class OrderHistory extends Component {
                     </Col>
                 </Row>
                 <PaymentModal />
-                <FeedbackModal />
 
             </div>
 

@@ -43,15 +43,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\components\Shop\MenuItem\MenuItems.js~RF9b490d.TMP" />
-    <None Remove="ClientApp\src\components\Shop\Review\CreateReview.js~RF20b3c0f.TMP" />
+    <None Remove="ClientApp\src\components\Management\MenuItem\MenuItems.js~RF9b490d.TMP" />
+    <None Remove="ClientApp\src\components\Management\Review\CreateReview.js~RF20b3c0f.TMP" />
+    <None Remove="ClientApp\src\services\PaymentService.js~RF29cc94a.TMP" />
     <None Remove="Controllers\OrdersController.cs~RFc705c2a.TMP" />
     <None Remove="Services\PaypalClient.cs~RFf5b55.TMP" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ClientApp\src\components\Customer\" />
-    <Folder Include="ClientApp\src\components\Shop\Owner\" />
+    <Folder Include="ClientApp\src\components\Management\Owner\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

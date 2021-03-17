@@ -2,7 +2,7 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Card, CardBody, CardColumns, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
-import CreateWaiter from '../Shop/Waiter/CreateWaiter';
+import CreateWaiter from '../Management/Waiter/CreateWaiter';
 import WaiterService from '../../services/WaiterService';
 
 
@@ -65,7 +65,7 @@ export default class Waiter extends Component {
             return (
                 <Modal returnFocusAfterClose={true} isOpen={this.state.isModalOpen} className="modal-dialog-centered" >
                     <ModalHeader className="text-danger">
-                        <FontAwesomeIcon icon={faExclamationCircle} size={"lg"} /> Are you sure you want to delete the waiter account?
+                        <FontAwesomeIcon icon={faExclamationCircle} size={"lg"} /> Are you sure to delete the waiter account?
                     </ModalHeader>
                     <ModalBody>
                         <Row>

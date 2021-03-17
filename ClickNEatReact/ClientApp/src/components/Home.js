@@ -1,11 +1,11 @@
-import { faEuroSign, faPlusCircle, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCaretUp, faEuroSign, faInfoCircle, faPlusCircle, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
-import { Button, Card, CardBody, CardImg, Col, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter, ModalHeader, Row, UncontrolledTooltip, CardImgOverlay, Badge } from 'reactstrap';
+import { Button, Card, CardBody, CardImg, Col, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter, ModalHeader, Row, UncontrolledTooltip, CardImgOverlay, Badge, UncontrolledCollapse } from 'reactstrap';
 import MenuItemService from '../services/MenuItemService';
 import ReviewService from '../services/ReviewService';
-import SelectedItem from './Shop/MenuItem/selectedItem';
-import './Shop/Review/StarRating.css'
+import SelectedItem from './Management/MenuItem/selectedItem';
+import './Management/Review/StarRating.css'
 
 
 export class Home extends Component {
@@ -18,15 +18,16 @@ export class Home extends Component {
             reviews: [],
             menusByCategory: {},
             isOpen: false,
-
-
-
+            menuItem: {},
+            isInfoOpen: false
         }
 
         this.getMenuItems = this.getMenuItems.bind(this);
         this.selectItem = this.selectItem.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.getReviewes = this.getReviewes.bind(this);
+        this.showMenuDetails = this.showMenuDetails.bind(this);
+        this.toggleInfoModal = this.toggleInfoModal.bind(this);
 
 
     }
@@ -71,12 +72,24 @@ export class Home extends Component {
         });
     }
 
+    toggleInfoModal() {
+        this.setState({ isInfoOpen: !this.state.isInfoOpen })
+    }
+
+    async showMenuDetails(menuItem) {
+
+        await this.setState({ menuItem: menuItem });
+        this.toggleInfoModal();
+
+    }
+
     async selectItem(menuItem) {
 
         let keys = Object.keys(this.state.selectedItems);
         if (!(keys.includes(menuItem.menuItemId.toString()))) {
             this.state.selectedItems[menuItem.menuItemId] = menuItem;
             this.state.selectedItems[menuItem.menuItemId]["itemAmmount"] = 1;
+            this.state.selectedItems[menuItem.menuItemId]["instruction"] = "";
             await this.setState({ selectedItems: this.state.selectedItems });
         }
         else {
@@ -97,10 +110,13 @@ export class Home extends Component {
         await ReviewService.getReviewsByMenuItem(menuItemId).then(async function (resp) {
             //console.log(resp);
             await self.setState({ reviews: resp.data });
+            if (resp.data.length > 0) {
+                self.toggleModal();
+            }
         }).catch(function (error) {
             console.log(error.response);
         });
-        this.toggleModal();
+
     }
 
 
@@ -108,42 +124,65 @@ export class Home extends Component {
 
     render() {
 
+        const InfoModal = () => {
+            return (
+                <Modal className={" rounded text-purple"} isOpen={this.state.isInfoOpen} toggle={this.toggleInfoModal} centered scrollable  >
+
+
+                    <ModalHeader toggle={this.toggleInfoModal}>
+                        <div className="h3">Details</div>
+                    </ModalHeader>
+                    <ModalBody className="text-center">
+                        {
+                            Object.keys(this.state.menuItem).length === 0 ? "" :
+                                <>
+                                    <p>{this.state.menuItem.description}</p>
+                                    <h4 ><u>Allergens</u></h4>
+                                    <p>{this.state.menuItem.allergens}</p>
+                                </>
+                        }
+                    </ModalBody>
+
+                </Modal>
+            )
+        }
 
         const ReviewModal = () => {
             return (
-                <Modal className={" rounded text-purple"} isOpen={this.state.isOpen} centered scrollable backdrop="static"  >
-                    <div className="shadow-custom">
+                <Modal className={" rounded text-purple"} toggle={this.toggleModal} isOpen={this.state.isOpen} centered scrollable   >
 
-                        <ModalHeader toggle={this.toggleModal}>
-                            <div className="h3">Reviewes</div>
-                        </ModalHeader>
-                        <ModalBody>
-                            {
-                                this.state.reviews.map((review, index) =>
 
-                                    <Row key={Math.random().toString(36).substring(0)}>
+                    <ModalHeader className="shadow-custom" toggle={this.toggleModal}>
+                        <div className="h3">Reviewes</div>
+                    </ModalHeader>
+                    <ModalBody style={{ overflowX: "hidden", overflowY: "auto" }}>
 
-                                        <Col xs={12} className="d-flex align-content-center justify-content-center">
-                                            <div className="rating">
-                                                <input type="radio" id="star5" disabled checked={review.rate == 5} name={"rating" + index} value="5" /><label htmlFor="star5" >5 stars</label>
-                                                <input type="radio" id="star4" disabled checked={review.rate == 4} name={"rating" + index} value="4" /><label htmlFor="star4" >4 stars</label>
-                                                <input type="radio" id="star3" disabled checked={review.rate == 3} name={"rating" + index} value="3" /><label htmlFor="star3" >3 stars</label>
-                                                <input type="radio" id="star2" disabled checked={review.rate == 2} name={"rating" + index} value="2" /><label htmlFor="star2" >2 stars</label>
-                                                <input type="radio" id="star1" disabled checked={review.rate == 1} name={"rating" + index} value="1" /><label htmlFor="star1" >1 star</label>
-                                            </div>
-                                        </Col>
-                                        <Col xs={12}>
-                                            <blockquote class="blockquote text-center">
-                                                <p class="mb-0 font-weight-normal">{review.comment}</p>
-                                                <footer class="blockquote-footer font-weight-light"><small>{review.reviewer + ", "}<cite>{(new Date(review.createdAt)).toLocaleString('en-US', { month: 'short', day: 'numeric', year: "numeric" })}</cite></small></footer>
-                                            </blockquote>
-                                        </Col>
-                                    </Row>
-                                )
+                        {
+                            this.state.reviews.map((review, index) =>
 
-                            }
-                        </ModalBody>
-                    </div>
+                                <Row key={Math.random().toString(36).substring(0)}>
+
+                                    <Col xs={12} className="d-flex align-content-center justify-content-center">
+                                        <div className="rating">
+                                            <input type="radio" id="star5" disabled checked={review.rate == 5} name={"rating" + index} value="5" /><label htmlFor="star5" >5 stars</label>
+                                            <input type="radio" id="star4" disabled checked={review.rate == 4} name={"rating" + index} value="4" /><label htmlFor="star4" >4 stars</label>
+                                            <input type="radio" id="star3" disabled checked={review.rate == 3} name={"rating" + index} value="3" /><label htmlFor="star3" >3 stars</label>
+                                            <input type="radio" id="star2" disabled checked={review.rate == 2} name={"rating" + index} value="2" /><label htmlFor="star2" >2 stars</label>
+                                            <input type="radio" id="star1" disabled checked={review.rate == 1} name={"rating" + index} value="1" /><label htmlFor="star1" >1 star</label>
+                                        </div>
+                                    </Col>
+                                    <Col xs={12}>
+                                        <blockquote className="blockquote text-center">
+                                            <p className="mb-0 font-weight-normal">{review.comment}</p>
+                                            <footer className="blockquote-footer font-weight-light"><small>{review.reviewer + ", "}<cite>{(new Date(review.createdAt)).toLocaleString('en-US', { month: 'short', day: 'numeric', year: "numeric" })}</cite></small></footer>
+                                        </blockquote>
+                                    </Col>
+                                </Row>
+                            )
+
+                        }
+                    </ModalBody>
+
                 </Modal>
             )
         }
@@ -152,7 +191,7 @@ export class Home extends Component {
 
         return (
             <>
-                <div className="row mt-4">
+                <div className="row mt-2">
                     <div className="col-12">
                         {this.state.menus.length < 1 ?
                             <div className="row">
@@ -165,50 +204,55 @@ export class Home extends Component {
 
 
                                 {
-                                    Object.keys(this.state.menusByCategory).map((category) =>
-                                        <div key={Math.random().toString(36).substring(0)}>
-                                            <div className="row mt-4">
-                                                <div className="col-12 h3">
-                                                    {category}
+                                    Object.keys(this.state.menusByCategory).map((category, index) =>
+                                        <div className="border mt-2 rounded" key={Math.random().toString(36).substring(0)}>
+                                            <div className="row ml-1 mr-1 p-2">
+                                                <div style={{ cursor: "pointer" }} id={"category" + category.split(" ").join("")} className="col-12 h3 mb-0 border text-purple rounded">
+                                                    {category} 
 
                                                 </div>
                                             </div>
-                                            <Row className="mt-2">
-                                                {
-                                                    this.state.menusByCategory[category].map((menu, index) => <Col key={Math.random().toString(36).substring(0)} xs={12} sm={4} lg={3} className=" mb-4" >
-                                                        <Card className="menuItemCard h-100">
-                                                            <CardImg src={menu.imgPath} style={{ objectFit: "cover", height: "100%", width: '100%' }} />
-                                                            <CardImgOverlay style={{ backgroundColor: 'rgba(255,255,255,.6)' }} className="pb-2 d-flex flex-column align-content-center justify-content-center  text-center text-purple ">
+                                            <UncontrolledCollapse defaultOpen toggler={"#category" + category.split(" ").join("")}>
+                                                <Row className="mt-1 pl-1 pr-1 mr-1 ml-1 ">
+                                                    {
+                                                        this.state.menusByCategory[category].map((menu, index) => <Col key={Math.random().toString(36).substring(0)} xs={6} sm={4} lg={3} className="pl-1 pr-1 mb-2" >
+                                                            <Card className="menuItemCard h-100">
+                                                                <CardImg src={menu.imgPath} style={{ objectFit: "cover", height: "100%", width: '100%', maxHeight: '400px' }} />
+                                                                <CardImgOverlay style={{ backgroundColor: 'rgba(255,255,255,.6)' }} className="p-1 d-flex flex-column align-content-center justify-content-center  text-center text-purple ">
 
 
-                                                                <h5> {menu.name}</h5>
-                                                                <h6> {menu.price}<FontAwesomeIcon icon={faEuroSign} /></h6>
-                                                                <p className=" font-weight-normal p-0 m-0"> {menu.description}</p>
-                                                                <p className="font-weight-normal p-0 m-0"><em>Allergens:</em> {menu.allergens}</p>
-                                                                <div className="text-center  " >
+                                                                    <h5> {menu.name}</h5>
+                                                                    <h6> {menu.price}<FontAwesomeIcon icon={faEuroSign} /></h6>
 
-                                                                    {!(localStorage.getItem('type') == 'admin' || localStorage.getItem('type') == 'waiter') && menu.availability &&
-                                                                        <>
-                                                                            <button onClick={() => this.selectItem(menu)} id={"btnTooltip" + menu.menuItemId} className="btn btn-transparent p-0" ><FontAwesomeIcon className="text-purple" icon={faPlusCircle} size={"2x"} /></button>
-                                                                            <UncontrolledTooltip placement="right" target={"btnTooltip" + menu.menuItemId}>
-                                                                                Add Item to your order
-                                                                                </UncontrolledTooltip>
+                                                                    <div className="text-center custom  " >
+                                                                        <Badge onClick={() => this.getReviewes(menu.menuItemId)} className="bg-purple btn " style={{ fontSize: '100%', cursor: 'pointer' }} >{parseFloat(menu.avgRate).toFixed(1)}<FontAwesomeIcon icon={faStar} />{"(" + menu.reviewCount + ")"}</Badge>
+                                                                        {" "}
+                                                                        <button onClick={() => this.showMenuDetails(menu)} id={"infoTooltip" + menu.menuItemId} className="btn btn-transparent p-0" ><FontAwesomeIcon className="text-purple" icon={faInfoCircle} size={"2x"} /></button>
+                                                                        <UncontrolledTooltip placement="right" target={"infoTooltip" + menu.menuItemId}>
+                                                                            Details
+                                                                    </UncontrolledTooltip>
+                                                                        <div >
+                                                                            {!(localStorage.getItem('type') == 'admin' || localStorage.getItem('type') == 'waiter') && menu.availability &&
+                                                                                <>
+                                                                                    <button onClick={() => this.selectItem(menu)} id={"btnTooltip" + menu.menuItemId} className="btn  btn-block btn-sm btn-select btn-outline-primary font-weight-bold" >Select Item</button>
+                                                                                    <UncontrolledTooltip placement="right" target={"btnTooltip" + menu.menuItemId}>
+                                                                                        Add Item to order
+                                                                                    </UncontrolledTooltip>
+                                                                                </>
+                                                                            }
 
-                                                                        </>
-                                                                    }
-                                                                    {" "}<Badge onClick={() => this.getReviewes(menu.menuItemId)} className="bg-purple btn " style={{ fontSize: '100%', cursor: 'pointer' }} >{menu.avgRate}<FontAwesomeIcon icon={faStar} />{"(" + menu.reviewCount + ")"}</Badge>
-
-                                                                </div>
-
-                                                            </CardImgOverlay>
-
-                                                        </Card>
-                                                    </Col>
+                                                                        </div>
 
 
-                                                    )
-                                                }
-                                            </Row>
+                                                                    </div>
+
+                                                                </CardImgOverlay>
+                                                            </Card>
+                                                        </Col>
+                                                        )
+                                                    }
+                                                </Row>
+                                            </UncontrolledCollapse>
 
                                         </div>
                                     )
@@ -220,9 +264,12 @@ export class Home extends Component {
 
                 </div>
                 <ReviewModal />
+                <InfoModal />
 
             </>
 
         )
     }
 }
+
+//<FontAwesomeIcon icon={faCaretDown} size={"lg"} style={{ float: "right" }} /><FontAwesomeIcon icon={faCaretUp} size={"lg"} style={{ float: "right" }} /> line 211

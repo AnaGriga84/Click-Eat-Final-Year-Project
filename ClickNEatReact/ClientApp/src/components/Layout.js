@@ -11,7 +11,8 @@ export class Layout extends Component {
     return (
       <div>
             <NavMenu />
-            <Container>
+            <Container className="main" style={{ height: window.innerHeight - 60 }} >
+                
           {this.props.children}
         </Container>
       </div>

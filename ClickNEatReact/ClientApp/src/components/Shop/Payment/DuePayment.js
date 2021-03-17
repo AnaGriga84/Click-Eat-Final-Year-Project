@@ -153,7 +153,6 @@ const DuePayment = (props) => {
 
 
                                     }).catch(function (error) {
-                                        alert("Transaction failed");
                                         console.log(error.response);
                                     })
 

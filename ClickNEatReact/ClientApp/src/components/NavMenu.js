@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHistory, faUtensils } from '@fortawesome/free-solid-svg-icons';
-import SelectedItem from './Shop/MenuItem/selectedItem';
+import SelectedItem from './Management/MenuItem/selectedItem';
 
 export class NavMenu extends Component {
     static displayName = NavMenu.name;
@@ -20,6 +20,8 @@ export class NavMenu extends Component {
         };
     }
 
+    
+
     toggleNavbar() {
         this.setState({
             collapsed: !this.state.collapsed
@@ -29,7 +31,7 @@ export class NavMenu extends Component {
     render() {
         return (
             <>
-                <Navbar color="dark" className="shadow-custom" sticky="top" expand="sm" dark>
+                <Navbar id="nav" color="dark" className="shadow-custom" sticky="top" expand="sm" dark>
                     <Container>
                         <NavbarBrand className="text-white" tag={Link} to="/">Click&Eat</NavbarBrand>
                         
@@ -38,7 +40,7 @@ export class NavMenu extends Component {
                             <Nav className="mr-0 ml-auto" navbar>
                                 {(this.state.type == 'admin' || this.state.type == 'waiter') && (<>
                                     <NavItem>
-                                        <Link tag={Link} className="nav-link text-white" to="/dashboard">Home</Link>
+                                        <Link tag={Link} className="nav-link text-white" to="/Analytics">Analytics</Link>
                                     </NavItem>
                                     {
                                         this.state.type == 'admin' &&
@@ -85,9 +87,7 @@ export class NavMenu extends Component {
 
                                 {!this.state.loggedIn && (
                                     <>
-                                        <NavItem>
-                                            <Link tag={Link} className="nav-link text-white" to="/#">Register</Link>
-                                        </NavItem>
+                                        
                                         < NavItem >
                                             <Link tag={Link} className="nav-link text-white" to="/signin">Signin</Link>
                                         </NavItem>
@@ -103,7 +103,7 @@ export class NavMenu extends Component {
                         {!(this.state.type == 'admin' || this.state.type == 'waiter') && <span >
                             <UncontrolledDropdown  >
                                 <DropdownToggle className="text-white pl-1 " nav caret>
-                                    <FontAwesomeIcon className="text-white" /*icon={faUtensils} size={"lg"} *//> My Orders <span className="badge text-purple bg-light badge-pill border small badge-light" >{localStorage.getItem('dishItemCount') != undefined ? localStorage.getItem('dishItemCount') : 0}
+                                    My Orders <span className="badge text-purple bg-light badge-pill border small badge-light" >{localStorage.getItem('dishItemCount') != undefined ? localStorage.getItem('dishItemCount') : 0}
                                     </span>
                                 </DropdownToggle>
                                 <DropdownMenu right>
@@ -117,7 +117,7 @@ export class NavMenu extends Component {
                                     </DropdownItem>
                                     <DropdownItem>
                                         <Link tag={Link} to='/orderHistory' className="text-purple nav-link font-weight-bold" >
-                                            <FontAwesomeIcon className="text-purple" icon={faHistory} size={"lg"} /> Previous Orders
+                                            <FontAwesomeIcon className="text-purple" /*icon={faHistory} size={"lg"}*/ /> Previous Orders
                                             {localStorage.getItem("pendingPayment") != null &&
                                                 <>{" "}
                                                     <span className="badge text-white badge-pill text-white bg-dark border small badge-light" >{"Due"}</span>
