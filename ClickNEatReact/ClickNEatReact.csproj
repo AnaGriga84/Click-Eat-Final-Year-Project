@@ -10,6 +10,7 @@
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <SignAssembly>false</SignAssembly>
     <Nullable>disable</Nullable>
+    <UserSecretsId>08040bdc-9c78-40a1-bc6c-578c99c48a3f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

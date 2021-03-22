@@ -191,7 +191,7 @@ class OrderHistory extends Component {
                                 Current Orders
                             </CardHeader>
                             <CardBody>
-                                {this.state.current.length == 0 ? "There is no orders currently!!" :
+                                {this.state.current.length == 0 ? "There are no orders currently !!!" :
 
                                     <Row>
                                         {
@@ -220,7 +220,7 @@ class OrderHistory extends Component {
                                                                 {
                                                                     order.orderItems.map(orderItem =>
                                                                         <Col key={Math.random().toString(36).substring(0)} xs={12} sm={6} lg={4} className=" mb-2 mt-2">
-                                                                            <Card className="h-100">
+                                                                            <Card className="h-100" style={{ maxHeight: "200px" }}>
                                                                                 <CardImg src={orderItem.menuItem.imgPath} className="h-100" style={{ objectFit: "cover" }} />
                                                                                 <CardImgOverlay style={{ backgroundColor: 'rgba(255,255,255,.6)' }} className='p-1 text-center'>
                                                                                     <p className="p-0 m-0">{orderItem.menuItem.name}</p>
@@ -282,7 +282,7 @@ class OrderHistory extends Component {
                                                             {
                                                                 order.orderItems.map(orderItem =>
                                                                     <Col key={Math.random().toString(36).substring(0)} xs={12} sm={6} lg={4} className=" mb-2 mt-2">
-                                                                        <Card className="h-100">
+                                                                        <Card className="h-100" style={{ maxHeight: "200px" }}>
                                                                             <CardImg src={orderItem.menuItem.imgPath} className="h-100" style={{ objectFit: "cover" }} />
                                                                             <CardImgOverlay className='text-center'>
                                                                                 <CardTitle className="bg-light mt-auto mb-auto">{orderItem.menuItem.name}</CardTitle>

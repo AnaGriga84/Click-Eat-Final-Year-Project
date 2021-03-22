@@ -215,7 +215,7 @@ function EditMenuItem(props) {
                                             <FontAwesomeIcon icon={faTag} />
 
                                             <select onChange={(e) => setCategoryId(e.target.value)} defaultValue={categoryId} required class="form-control text-purple">
-                                                <option value="">Select Catagory</option>
+                                                <option value="">Select Category</option>
                                                 {
                                                     categories.map((category) =>
                                                         <option selected={categoryId == category.categoryId} value={category.categoryId}>{category.name}</option>

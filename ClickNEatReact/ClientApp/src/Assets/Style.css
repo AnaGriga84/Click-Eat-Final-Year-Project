@@ -351,15 +351,7 @@ body {
 .cursor-pointer{
     cursor: pointer;
 }
-body {
-    overflow: hidden;
-}
 
-.main {
-   overflow-x:hidden;
-    overflow-y: auto;
-    
-}
 *{
     -ms-overflow-style: none;
 }
@@ -369,8 +361,8 @@ body {
 }
 
 .form-control.qty{
-    min-width:30% !important;
-    width:30%
+    min-width:60% !important;
+    width:60%
 }
 /* width */
 /*::-webkit-scrollbar {*/
@@ -435,4 +427,8 @@ li.active{
 
 .menuItemCard:hover {
     box-shadow: 0 .35rem .6rem rgba(75,0,130,.5 ) !important;
+}
+
+.bg-semi-transparent {
+    background-color: rgba(255,255,255,.4) !important;
 }

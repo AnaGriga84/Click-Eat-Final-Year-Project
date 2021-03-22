@@ -37,7 +37,7 @@ export default class App extends Component {
         this.setLoggedIn(localStorage.getItem('loggedIn'));
         let count = localStorage.getItem('dishItemCount') != undefined ? localStorage.getItem('dishItemCount') : 0;
         this.setState({ count: parseInt(count) });
-        window.addEventListener("resize", () => window.location.reload(false));
+       // window.addEventListener("resize", () => window.location.reload(false));
     }
     componentWillUnmount() {
         window.removeEventListener('resize', () => window.location.reload(false));

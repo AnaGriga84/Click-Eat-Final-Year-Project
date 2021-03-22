@@ -1,6 +1,7 @@
 import { faCaretDown, faCaretUp, faEuroSign, faInfoCircle, faPlusCircle, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardImg, Col, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter, ModalHeader, Row, UncontrolledTooltip, CardImgOverlay, Badge, UncontrolledCollapse } from 'reactstrap';
 import MenuItemService from '../services/MenuItemService';
 import ReviewService from '../services/ReviewService';
@@ -19,7 +20,8 @@ export class Home extends Component {
             menusByCategory: {},
             isOpen: false,
             menuItem: {},
-            isInfoOpen: false
+            isInfoOpen: false,
+            isSelectedModalOpen: false,
         }
 
         this.getMenuItems = this.getMenuItems.bind(this);
@@ -28,6 +30,7 @@ export class Home extends Component {
         this.getReviewes = this.getReviewes.bind(this);
         this.showMenuDetails = this.showMenuDetails.bind(this);
         this.toggleInfoModal = this.toggleInfoModal.bind(this);
+        this.toggleSelectedModal = this.toggleSelectedModal.bind(this);
 
 
     }
@@ -72,6 +75,10 @@ export class Home extends Component {
         });
     }
 
+    toggleSelectedModal() {
+        this.setState({ isSelectedModalOpen: !this.state.isSelectedModalOpen })
+    }
+
     toggleInfoModal() {
         this.setState({ isInfoOpen: !this.state.isInfoOpen })
     }
@@ -98,6 +105,7 @@ export class Home extends Component {
         }
         //console.log(this.state.selectedItems);
         localStorage.setItem('selectedItems', JSON.stringify(this.state.selectedItems));
+        this.toggleSelectedModal();
         this.props.selectMenuItem(menuItem);
     }
 
@@ -147,13 +155,30 @@ export class Home extends Component {
             )
         }
 
+        const SelectItemModal = () => {
+            return (
+                <Modal className={" rounded text-success"} isOpen={this.state.isSelectedModalOpen} toggle={this.toggleSelectedModal} centered scrollable  >
+
+
+                    <ModalHeader toggle={this.toggleSelectedModal}>
+                        <div className="h3">Menu item selected !!!</div>
+                    </ModalHeader>
+                    <ModalBody className="text-center">
+                        <p>Menu item added to your order</p>
+                        <Link className="text-decoration-none btn-custom btn btn-sm" to="/dish">View your order</Link>
+                    </ModalBody>
+
+                </Modal>
+            )
+        }
+
         const ReviewModal = () => {
             return (
                 <Modal className={" rounded text-purple"} toggle={this.toggleModal} isOpen={this.state.isOpen} centered scrollable   >
 
 
                     <ModalHeader className="shadow-custom" toggle={this.toggleModal}>
-                        <div className="h3">Reviewes</div>
+                        <div className="h3">Reviews</div>
                     </ModalHeader>
                     <ModalBody style={{ overflowX: "hidden", overflowY: "auto" }}>
 
@@ -208,7 +233,7 @@ export class Home extends Component {
                                         <div className="border mt-2 rounded" key={Math.random().toString(36).substring(0)}>
                                             <div className="row ml-1 mr-1 p-2">
                                                 <div style={{ cursor: "pointer" }} id={"category" + category.split(" ").join("")} className="col-12 h3 mb-0 border text-purple rounded">
-                                                    {category} 
+                                                    {category} <FontAwesomeIcon icon={faCaretDown} size={"lg"} style={{ float: "right" }} /><FontAwesomeIcon icon={faCaretUp} size={"lg"} style={{ float: "right" }} />
 
                                                 </div>
                                             </div>
@@ -216,14 +241,20 @@ export class Home extends Component {
                                                 <Row className="mt-1 pl-1 pr-1 mr-1 ml-1 ">
                                                     {
                                                         this.state.menusByCategory[category].map((menu, index) => <Col key={Math.random().toString(36).substring(0)} xs={6} sm={4} lg={3} className="pl-1 pr-1 mb-2" >
-                                                            <Card className="menuItemCard h-100">
-                                                                <CardImg src={menu.imgPath} style={{ objectFit: "cover", height: "100%", width: '100%', maxHeight: '400px' }} />
-                                                                <CardImgOverlay style={{ backgroundColor: 'rgba(255,255,255,.6)' }} className="p-1 d-flex flex-column align-content-center justify-content-center  text-center text-purple ">
+                                                            <Card className="menuItemCard h-100" style={{ maxHeight:"250px" }}>
+                                                                
+                                                                <CardImg top src={menu.imgPath} style={{ objectFit: "cover", height: "60%" }} />
+                                                                <CardImgOverlay top className="p-1 d-flex flex-column align-content-center bg-semi-transparent justify-content-center  text-center text-purple " style={{ height:"60%" }}>
 
 
-                                                                    <h5> {menu.name}</h5>
-                                                                    <h6> {menu.price}<FontAwesomeIcon icon={faEuroSign} /></h6>
+                                                                    <p className="font-weight-bolder m-0"> {menu.name}</p>
+                                                                    <p className="font-weight-bolder m-0"> {menu.price}<FontAwesomeIcon icon={faEuroSign} /></p>
 
+                                                                    
+
+                                                                    </CardImgOverlay>
+
+                                                                <CardBody className="p-1">
                                                                     <div className="text-center custom  " >
                                                                         <Badge onClick={() => this.getReviewes(menu.menuItemId)} className="bg-purple btn " style={{ fontSize: '100%', cursor: 'pointer' }} >{parseFloat(menu.avgRate).toFixed(1)}<FontAwesomeIcon icon={faStar} />{"(" + menu.reviewCount + ")"}</Badge>
                                                                         {" "}
@@ -236,7 +267,7 @@ export class Home extends Component {
                                                                                 <>
                                                                                     <button onClick={() => this.selectItem(menu)} id={"btnTooltip" + menu.menuItemId} className="btn  btn-block btn-sm btn-select btn-outline-primary font-weight-bold" >Select Item</button>
                                                                                     <UncontrolledTooltip placement="right" target={"btnTooltip" + menu.menuItemId}>
-                                                                                        Add Item to order
+                                                                                        Add Item to your order
                                                                                     </UncontrolledTooltip>
                                                                                 </>
                                                                             }
@@ -245,8 +276,7 @@ export class Home extends Component {
 
 
                                                                     </div>
-
-                                                                </CardImgOverlay>
+                                                                </CardBody>
                                                             </Card>
                                                         </Col>
                                                         )
@@ -265,11 +295,10 @@ export class Home extends Component {
                 </div>
                 <ReviewModal />
                 <InfoModal />
+                <SelectItemModal />
 
             </>
 
         )
     }
 }
-
-//<FontAwesomeIcon icon={faCaretDown} size={"lg"} style={{ float: "right" }} /><FontAwesomeIcon icon={faCaretUp} size={"lg"} style={{ float: "right" }} /> line 211

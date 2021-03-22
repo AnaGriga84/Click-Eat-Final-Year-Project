@@ -1,4 +1,5 @@
-﻿import { faAlignJustify, faEuroSign } from '@fortawesome/free-solid-svg-icons';
+﻿import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faAlignJustify, faEuroSign, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { timers } from 'jquery';
 import React, { Component } from 'react'
@@ -32,6 +33,7 @@ export default class SelectedItem extends Component {
         this.proceedToCheckOut = this.proceedToCheckOut.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.setInstruction = this.setInstruction.bind(this);
+        this.removeItem = this.removeItem.bind(this);
     }
 
     async componentDidMount() {
@@ -57,6 +59,20 @@ export default class SelectedItem extends Component {
         this.state.selectedItems[key].instruction = instruction;
         await this.setState({ selectedItems: this.state.selectedItems });
         localStorage.setItem('selectedItems', JSON.stringify(this.state.selectedItems));
+    }
+
+    async removeItem(key) {
+        let item = this.state.selectedItems[key];
+        delete this.state.selectedItems[key];
+        await this.setState({ selectedItems: this.state.selectedItems });
+        let diff = -1 * parseInt(item.itemAmmount)
+        let total = parseFloat(this.state.totalPrice);
+        total += parseInt(diff) * parseFloat(item.price);
+
+        await this.setState({ totalPrice: total.toFixed(2) });
+        localStorage.setItem('dishItemCount', parseInt(localStorage.getItem('dishItemCount')) + diff);
+        localStorage.setItem('selectedItems', JSON.stringify(this.state.selectedItems));
+        window.location.reload(false);
     }
 
     async changeQuantity(key, qty) {
@@ -256,8 +272,8 @@ export default class SelectedItem extends Component {
 
                     < Row className="mt-4">
                         <Col xs={12} md={6} lg={8}>
-                            <h4>Dish</h4>
-                            <Row className="overflow-auto " style={{ height: '350px' }}>
+                        <h4>Your Order</h4>
+                        <Row style={{ height: '350px', overflowX: "hidden", overflowY: "auto" }}>
                                 {
                                     Object.keys(this.state.selectedItems).map((key) =>
 
@@ -267,7 +283,7 @@ export default class SelectedItem extends Component {
                                                 <CardImgOverlay style={{ backgroundColor: 'rgba(255,255,255,.8)' }} className="pt-2">
                                                     <h6><em className="font-weight-bold">Name:</em> {this.state.selectedItems[key].name}</h6>
                                                     <h6><em className="font-weight-bold">Price:</em> {this.state.selectedItems[key].price}<FontAwesomeIcon icon={faEuroSign} />{' * ' + this.state.selectedItems[key].itemAmmount + ' = ' + (this.state.selectedItems[key].itemAmmount * this.state.selectedItems[key].price).toFixed(2)}<FontAwesomeIcon icon={faEuroSign} /></h6>
-                                                    <h6><em className="font-weight-bold">Instruction:</em> {this.state.selectedItems[key].menuCategory.name}</h6>
+                                                    <h6><em className="font-weight-bold">Category:</em> {this.state.selectedItems[key].menuCategory.name}</h6>
                                                     <form>
                                                         
                                                         <div className="">
@@ -288,6 +304,7 @@ export default class SelectedItem extends Component {
                                                                         onBlur={(e) => this.changeQuantity(key, e.target.value)}
                                                                         
                                                                     />
+                                                                    <button onClick={() => this.removeItem(key)} title='Remove Item' className="btn btn-custom btn-sm"><FontAwesomeIcon  icon={faTrash} /></button>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -340,7 +357,7 @@ export default class SelectedItem extends Component {
                                                 <tr>
                                                     <td colSpan="2">
                                                         <div className="mb-2">
-                                                            Special Instructions
+                                                            Special Instruction
                                                     <textarea className='form-control' onChange={(e) => this.setState({ instruction: e.target.value })}></textarea>
                                                         </div>
                                                         <div>
