@@ -95,7 +95,6 @@ const ChangePassword = (props) => {
                                 <div className="form-group ">
                                     <div className="input-group">
                                         <span>
-
                                             <FontAwesomeIcon icon={faLock} />
                                             <input type="password"
                                                 defaultValue={conPass}
