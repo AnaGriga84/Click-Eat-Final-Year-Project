@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This class models the MenuItem object in the database with all the necesarry attributes.
+    /// </summary>
     public class MenuItem
     {
         [Key]
@@ -22,6 +25,7 @@ namespace ClickNEatReact.Models
         public string ImgPath { set; get; }
         public bool Availability { set; get; }
         public string Allergens { set; get; }
+        public bool isVegan { set; get; }
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [XmlIgnore, JsonIgnore]

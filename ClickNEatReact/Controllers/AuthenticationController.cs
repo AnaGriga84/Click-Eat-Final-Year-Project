@@ -12,7 +12,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-//using ClickNEatReact.Services;
 
 namespace ClickNEatReact.Controllers
 {
@@ -76,9 +75,7 @@ namespace ClickNEatReact.Controllers
                     }
                     return StatusCode(StatusCodes.Status201Created, new Response { status = "Success", title = "User Created Successfully" });
                 }
-            }
-
-            
+            }  
         }
 
         [Authorize(Roles =UserRole.Admin)]
@@ -128,8 +125,6 @@ namespace ClickNEatReact.Controllers
                     return StatusCode(StatusCodes.Status201Created, new Response { status = "Success", title = "Waiter Created Successfully" });
                 }
             }
-
-
         }
 
         [HttpPost]
@@ -146,7 +141,6 @@ namespace ClickNEatReact.Controllers
                     {
                         new Claim(ClaimTypes.Name,userExists.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-
                     };
 
                     foreach (var userRole in userRoles)
@@ -177,11 +171,8 @@ namespace ClickNEatReact.Controllers
             else
             {
                 return Unauthorized();
-            }
-
-            
+            }            
         }
-
 
         [HttpPost]
         [Route("register/admin")]
@@ -238,8 +229,6 @@ namespace ClickNEatReact.Controllers
                     return StatusCode(StatusCodes.Status201Created, new Response { status = "Success", title = "Admin Created Successfully" });
                 }
             }
-
-
         }
 
         [Authorize(Roles = UserRole.Admin)]
@@ -269,7 +258,6 @@ namespace ClickNEatReact.Controllers
             if (userExists != null)
             {
                 var users = await userManager.DeleteAsync(userExists);
-                //return StatusCode(StatusCodes.Status400BadRequest, new Response { status = "Error", title = "User already exists" });
             }
             else
             {
@@ -277,6 +265,59 @@ namespace ClickNEatReact.Controllers
             }
 
             return NoContent();
+        }
+
+        [Authorize(Roles = UserRole.Admin)]
+        [HttpGet]
+        [Route("users/customers")]
+        public async Task<IActionResult> GetCustomers()
+        {
+            var users  = await userManager.GetUsersInRoleAsync(UserRole.User);
+            var admins = await userManager.GetUsersInRoleAsync(UserRole.Admin);
+            foreach(ApplicationUser admin in admins)
+            {
+                    users = users.Where<ApplicationUser>(U=>U.UserName != admin.UserName).ToList<ApplicationUser>();
+            }
+            //Console.WriteLine(JsonConvert.SerializeObject(users));
+            return Ok(new { user = users });
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("changePassword/{username}")]
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordData passwords, string username)
+        {
+            var user = await userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { status = "Error", title = "User does not exist" });
+            }
+            else
+            {
+
+                if (passwords.NewPassword.Equals(passwords.ConfirmPassword))
+                {
+                    var result = await userManager.ChangePasswordAsync(user, passwords.OldPassword, passwords.NewPassword);
+                    if (!result.Succeeded)
+                    {
+                        var errorString = "";
+                        foreach (var err in result.Errors)
+                        {
+                            errorString += err.Description + "\r\n";
+
+                        }
+                        return StatusCode(StatusCodes.Status400BadRequest, new Response { status = "Error", title = errorString });
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status200OK, new Response { status = "Success", title = "Password changed successfully" });
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new Response { status = "Error", title = "Confirm password doesn't match with new password"});
+                }
+            }
         }
     }
 }

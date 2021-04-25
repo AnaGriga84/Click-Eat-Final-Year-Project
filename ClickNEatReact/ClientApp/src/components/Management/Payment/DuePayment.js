@@ -35,14 +35,9 @@ const DuePayment = (props) => {
 
         async function getDeviceData(err, dataCollectorInstance) {
             if (err) {
-                // Handle error in creation of data collector
                 return;
             }
-            // At this point, you should access the dataCollectorInstance.deviceData value and provide it
-            // to your server, e.g. by injecting it into your form as a hidden input.
             var deviceData = dataCollectorInstance.deviceData;
-
-
             window.braintree.client.create({
                 authorization: authToken,
             }, function (clientErr, clientInstance) {
@@ -50,11 +45,6 @@ const DuePayment = (props) => {
                     console.error(clientErr);
                     return;
                 }
-
-                // This example shows Hosted Fields, but you can also use this
-                // client instance to create additional components here, such as
-                // PayPal or Data Collector.
-
                 window.braintree.hostedFields.create({
                     client: clientInstance,
                     styles: {
@@ -84,21 +74,15 @@ const DuePayment = (props) => {
                         expirationDate: {
                             selector: '#expiration-date',
                             placeholder: '10/2022'
-                        },
-                        postalCode: {
-                            selector: '#postal-code',
-                            placeholder: '10001'
                         }
                     }
                 },
-
 
                     function (hostedFieldsErr, hostedFieldsInstance) {
                         if (hostedFieldsErr) {
                             console.error(hostedFieldsErr);
                             return;
                         }
-
                         submit.removeAttribute('disabled');
 
                         form.addEventListener('submit', function (event) {
@@ -106,11 +90,6 @@ const DuePayment = (props) => {
 
                             var formIsInvalid = false;
                             var state = hostedFieldsInstance.getState();
-
-
-                            // Loop through the Hosted Fields and check
-                            // for validity, apply the is-invalid class
-                            // to the field container if invalid
                             Object.keys(state.fields).forEach(function (field) {
                                 if (!state.fields[field].isValid) {
                                     $(state.fields[field].container).addClass('is-invalid');
@@ -118,14 +97,10 @@ const DuePayment = (props) => {
                                 }
                             });
 
-                            if (formIsInvalid) {
-                                // skip tokenization request if any fields are invalid
+                            if (formIsInvalid) {                               
                                 alert("Card input is not valid");
                                 return;
                             }
-
-
-
 
                             hostedFieldsInstance.tokenize({
                                 cardholderName: $('#cc-name').val()
@@ -136,10 +111,7 @@ const DuePayment = (props) => {
                                         console.error(tokenizeErr);
                                         return;
                                     }
-
                                     console.log(deviceData);
-                                    // If this was a real integration, this is where you would
-                                    // send the nonce to your server.
                                     console.log('Got a nonce: ' + payload.nonce);
 
                                     BraintreeService.payment({
@@ -161,26 +133,18 @@ const DuePayment = (props) => {
                         }, false);
                     });
             });
-
-
         }
 
         await window.braintree.client.create({
             authorization: authToken
         }, async function (err, clientInstance) {
-            // Creation of any other components...
 
             await window.braintree.dataCollector.create({
                 client: clientInstance,
                 hostedFields: true
             }, (err, dataCollectorInstance) => getDeviceData(err, dataCollectorInstance));
         });
-
-
-
-
     }
-
 
     const handleInputChange = (event) => {
 
@@ -194,7 +158,6 @@ const DuePayment = (props) => {
             event.target.value = formatCVC(event.target.value);
             setCardCVC(event.target.value);
         }
-
         //this.setState({ [target.name]: target.value });
     };
 
@@ -227,8 +190,8 @@ const DuePayment = (props) => {
         console.log(payData);
         PaymentService.insertDuePayment(payData).then(function (resp) {
             console.log(resp);
-            setMsg(<><div>Payement Success!!</div>
-                <div><a href="/" className="text-decoration-none text-purple font-weight-bold">Go back to menu items</a></div></>);
+            setMsg(<><div>Payment Successful</div>
+                <div><a href="/" className="text-decoration-none text-purple font-weight-bold">Go back to see your order</a></div></>);
             setVisible(true);
             localStorage.removeItem("pendingPayment");
             
@@ -236,15 +199,11 @@ const DuePayment = (props) => {
         }).catch(function (error) {
             console.log(error.response);
         });
-
     }
-
 
     const ConfirmModal = () => {
         return (
             <Modal className={" rounded text-purple"} isOpen={isOpen} centered scrollable backdrop="static"  >
-               
-
                     <ModalHeader toggle={() => toggleModal(!isOpen)}>
                         <div className="h3">Confirm Payment</div>
                     </ModalHeader>
@@ -257,8 +216,7 @@ const DuePayment = (props) => {
                     </ModalBody>
                     <ModalFooter className="text-right">
                         <button onClick={() => makePayment()} className="btn btn-custom" >Pay</button>
-                    </ModalFooter>
-                
+                    </ModalFooter>                
             </Modal>
         )
     }
@@ -267,8 +225,6 @@ const DuePayment = (props) => {
         return (
             <Modal className={" rounded text-purple"} isOpen={visible} centered scrollable backdrop="static"  >
                 <div className="shadow-custom">
-
-
                     <ModalBody>
                         <Alert color="info" className="text-center" isOpen={visible} toggle={() => window.location.reload(false)}>
                             {msg}
@@ -282,17 +238,12 @@ const DuePayment = (props) => {
         )
     }
 
-
     return (
-
         <>  
-
             <div className='demo-frame'>
-               
-
                 <form id="paymentForm" method="post">
-                    <label className="hosted-fields--label" ><FontAwesomeIcon icon={faInfoCircle} size={"sm"} /> If any field is inaccessible press on field label to access it.</label>
-                    <label className="hosted-fields--label" htmlFor="ammount">Ammount Total</label>
+                    <label className="hosted-fields--label" ><FontAwesomeIcon icon={faInfoCircle} size={"sm"} /> Please enter your card details</label>
+                    <label className="hosted-fields--label" htmlFor="ammount">Total Amount</label>
                     <div className="hosted-field " style={{ paddingTop:'5px' }} id="ammount">
                         {order.total}<FontAwesomeIcon icon={faEuroSign} />
                     </div>
@@ -306,20 +257,16 @@ const DuePayment = (props) => {
 
                     <label className="hosted-fields--label" style={{ cursor: "pointer" }} htmlFor="expiration-date">Expiration Date</label>
                     <div className="hosted-field" id="expiration-date"></div>
-                    <label className="hosted-fields--label" style={{ cursor: "pointer" }} htmlFor="postal-code">Postal Code</label>
-                    <div className="hosted-field" id="postal-code"></div>
+
                     <div className="text-center custom">
                         <input type="submit" value="Pay" className="btn btn-outline-primary" />
                     </div>
                 </form>
-
                 <ConfirmModal />
                 <SuccessModal />
             </div>
         </>
-
     )
-
 }
 
 export default DuePayment;

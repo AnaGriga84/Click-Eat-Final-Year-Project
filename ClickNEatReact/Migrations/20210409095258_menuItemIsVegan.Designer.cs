@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClickNEatReact.Migrations
 {
     [DbContext(typeof(ClickEatContext))]
-    [Migration("20210130093136_itemReviews")]
-    partial class itemReviews
+    [Migration("20210409095258_menuItemIsVegan")]
+    partial class menuItemIsVegan
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace ClickNEatReact.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("ClickNEatReact.Models.ApplicationUser", b =>
                 {
@@ -104,9 +104,13 @@ namespace ClickNEatReact.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<int?>("MenuItemId")
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderItemId")
                         .HasColumnType("int");
 
                     b.Property<float>("Rate")
@@ -168,6 +172,12 @@ namespace ClickNEatReact.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int>("ReviewCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isVegan")
+                        .HasColumnType("bit");
+
                     b.HasKey("MenuItemId");
 
                     b.HasIndex("CategoryId");
@@ -206,6 +216,12 @@ namespace ClickNEatReact.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Instruction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsReviewed")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ItemAmmount")
                         .HasColumnType("int");
 
@@ -214,6 +230,9 @@ namespace ClickNEatReact.Migrations
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<string>("OrderItemStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("price")
                         .HasColumnType("float");
@@ -245,6 +264,11 @@ namespace ClickNEatReact.Migrations
 
                     b.Property<string>("CardNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("ExpireDate")
                         .HasColumnType("nvarchar(max)");
@@ -394,7 +418,9 @@ namespace ClickNEatReact.Migrations
                 {
                     b.HasOne("ClickNEatReact.Models.MenuItem", "MenuItem")
                         .WithMany("ItemReviews")
-                        .HasForeignKey("MenuItemId");
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("MenuItem");
                 });

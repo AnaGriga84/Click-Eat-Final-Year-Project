@@ -64,9 +64,7 @@ export default class Category extends Component {
         await this.setState({ mode: 'edit' });
     }
 
-
     render() {
-
 
         const ConfirmDelete = () => {
             return (
@@ -93,7 +91,6 @@ export default class Category extends Component {
                 </Modal>
                 )
         }
-
 
         return (
             <>
@@ -162,5 +159,4 @@ export default class Category extends Component {
 
         )
     }
-
 }

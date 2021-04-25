@@ -24,7 +24,6 @@ export default class MenuItem extends Component {
         this.getMenuItems = this.getMenuItems.bind(this);
         this.Delete = this.Delete.bind(this);
         this.ConfirmDelete = this.ConfirmDelete.bind(this);
-
     }
 
     componentDidMount() {
@@ -42,11 +41,11 @@ export default class MenuItem extends Component {
         });
     }
 
-
     async ConfirmDelete(menu) {
         await this.setState({ menu: menu });
         this.setState({ isModalOpen: true });
     }
+
     async Delete(menu) {
 
         MenuItemService.deleteMenuItem(menu.menuItemId).then(function (resp) {
@@ -62,7 +61,6 @@ export default class MenuItem extends Component {
         await this.setState({ menu: menu });
         await this.setState({ mode: 'edit' });
     }
-
 
     render() {
 
@@ -81,13 +79,11 @@ export default class MenuItem extends Component {
                                 <h6><em className="font-weight-bold">Name:</em> {this.state.menu.name}</h6>
                                 <h6><em className="font-weight-bold">Price:</em> {this.state.menu.price}<FontAwesomeIcon icon={faEuroSign} /></h6>
                                 <h6><em className="font-weight-bold">Availability:</em> {this.state.menu.availability ? "Available" : "Unavailable"}</h6>
+                                <h6><em className="font-weight-bold">Special Dietary:</em> {this.state.menu.isVegan ? "Vegetarian" : "Non Vegetarian"}</h6>
                                 <h6><em className="font-weight-bold">Category:</em> {this.state.menu.menuCategory == undefined ? "" : this.state.menu.menuCategory.name}</h6>
                                 <h6><em className="font-weight-bold">Description:</em> {this.state.menu.description}</h6>
                                 <h6><em className="font-weight-bold">Allergens:</em> {this.state.menu.allergens}</h6>
-
-
                             </CardBody>
-
                         </Card>
                     </ModalBody>
                     <ModalFooter>
@@ -97,8 +93,6 @@ export default class MenuItem extends Component {
                 </Modal>
             )
         }
-
-
         return (
             <>
                 {
@@ -139,26 +133,21 @@ export default class MenuItem extends Component {
                                                             <h6><em className="font-weight-bold">Name:</em> {menu.name}</h6>
                                                             <h6><em className="font-weight-bold">Price:</em> {menu.price}<FontAwesomeIcon icon={faEuroSign} /></h6>
                                                             <h6><em className="font-weight-bold">Availability:</em> {menu.availability ? "Available" : "Unavailable"}</h6>
+                                                            <h6><em className="font-weight-bold">Special Dietary:</em> {menu.isVegan ? "Vegetarian" : "Non Vegetarian"}</h6>
                                                             <h6><em className="font-weight-bold">Category:</em> {menu.menuCategory.name}</h6>
                                                             <h6><em className="font-weight-bold">Description:</em> {menu.description}</h6>
-                                                            <h6><em className="font-weight-bold">Allergens:</em> {menu.allergens}</h6>
-                                                            
-                                                            
+                                                            <h6><em className="font-weight-bold">Allergens:</em> {menu.allergens}</h6>                                                                                            
                                                         </CardBody>
-
                                                     </Card>
-                                                </Col>
-                                            
+                                                </Col>                                           
                                         )
                                         }
                                     </Row>
                                 </>
-                            }
-                            
+                            }                           
                         </div>
                         
                     </div>
-
                 }
                 {
                     this.state.mode === 'create' && <div>

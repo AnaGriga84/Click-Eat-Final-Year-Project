@@ -48,11 +48,6 @@ export default class SelectedItem extends Component {
             total = total.toFixed(2);
             this.setState({ totalPrice: total });
         }
-
-        
-
-
-
     }
 
     async setInstruction(key, instruction) {
@@ -88,10 +83,7 @@ export default class SelectedItem extends Component {
         localStorage.setItem('dishItemCount', parseInt(localStorage.getItem('dishItemCount')) + diff);
         localStorage.setItem('selectedItems', JSON.stringify(this.state.selectedItems));
 
-
-
         this.props.updateThis();
-
     }
 
     async proceedToCheckOut(e) {
@@ -110,8 +102,7 @@ export default class SelectedItem extends Component {
             table: this.state.table,
             token:""
         }
-        
-        
+                
         if (this.state.payType == 'now') {
             let self = this;
             
@@ -147,13 +138,7 @@ export default class SelectedItem extends Component {
                             "instruction": selecteditem.instruction
                         }
                         orderItems.push(orderItem);
-
                     }
-
-                    
-
-
-
                 }
 
                 let order = {
@@ -180,8 +165,6 @@ export default class SelectedItem extends Component {
                     console.log(error);
                     console.log(error.response);
                 });
-
-
             }
             else {
                 let self = this;
@@ -203,13 +186,6 @@ export default class SelectedItem extends Component {
                         orderItems.push(orderItem);
 
                     }
-
-                    
-
-                    
-
-
-
                 }
                 let order = {
                     "orderId": localStorage.getItem('pendingPayment'),
@@ -227,19 +203,13 @@ export default class SelectedItem extends Component {
                     window.location.href = "/orderHistory";
                 }).catch(function (error) {
                     console.log(error.response);
-                });
-                
-                
-            }
-            
-        }
-        
+                });               
+            }           
+        }        
     }
 
     toggleModal() {
         this.setState({ isOpen: !this.state.isOpen });
-
-
     }
 
     render() {
@@ -248,14 +218,12 @@ export default class SelectedItem extends Component {
             return (
                 <Modal className={" rounded text-purple"} isOpen={this.state.isOpen} centered scrollable backdrop="static"  >
                     
-
                         <ModalHeader toggle={this.toggleModal}>
                             <div className="h3">Checkout</div>
                         </ModalHeader>
                     <ModalBody style={{ overflowX: "hidden", overflowY: "auto" }}>
                             <CreatePayment order={this.state.order} />
-                        </ModalBody>
-                    
+                    </ModalBody>                   
                 </Modal>
             )
         }
@@ -269,7 +237,6 @@ export default class SelectedItem extends Component {
                 }
                 {Object.keys(this.state.selectedItems).length > 0 &&
 
-
                     < Row className="mt-4">
                         <Col xs={12} md={6} lg={8}>
                         <h4>Your Order</h4>
@@ -281,17 +248,17 @@ export default class SelectedItem extends Component {
                                             <Card  className="shadow-custom" style={{ height: '200px' }}>
                                                 <CardImg top className="rounded" src={this.state.selectedItems[key].imgPath} style={{ height: '100%', objectFit: "cover" }} />
                                                 <CardImgOverlay style={{ backgroundColor: 'rgba(255,255,255,.8)' }} className="pt-2">
-                                                    <h6><em className="font-weight-bold">Name:</em> {this.state.selectedItems[key].name}</h6>
+                                                    <div>
+                                                        <h6><em className="font-weight-bold">Name:</em> {this.state.selectedItems[key].name}</h6>
+                                                        <button style={{ float: 'right', marginTop: '-20px' }} onClick={() => this.removeItem(key)} title='Remove Item' className="btn btn-custom btn-sm"><FontAwesomeIcon icon={faTrash} /></button>
+                                                    </div>
                                                     <h6><em className="font-weight-bold">Price:</em> {this.state.selectedItems[key].price}<FontAwesomeIcon icon={faEuroSign} />{' * ' + this.state.selectedItems[key].itemAmmount + ' = ' + (this.state.selectedItems[key].itemAmmount * this.state.selectedItems[key].price).toFixed(2)}<FontAwesomeIcon icon={faEuroSign} /></h6>
                                                     <h6><em className="font-weight-bold">Category:</em> {this.state.selectedItems[key].menuCategory.name}</h6>
-                                                    <form>
-                                                        
+                                                    <form>                                                        
                                                         <div className="">
-
                                                             <div className="input-group">
                                                                 <span>
                                                                     Quantity: 
-
                                                                     <input
                                                                         defaultValue={this.state.selectedItems[key].itemAmmount}
                                                                         type="number"
@@ -301,39 +268,29 @@ export default class SelectedItem extends Component {
 
                                                                         placeholder={"Quantity"}
                                                                         onMouseLeave={(e) => this.changeQuantity(key, e.target.value)}
-                                                                        onBlur={(e) => this.changeQuantity(key, e.target.value)}
-                                                                        
-                                                                    />
-                                                                    <button onClick={() => this.removeItem(key)} title='Remove Item' className="btn btn-custom btn-sm"><FontAwesomeIcon  icon={faTrash} /></button>
+                                                                        onBlur={(e) => this.changeQuantity(key, e.target.value)}                                                                       
+                                                                    />                                                                  
                                                                 </span>
                                                             </div>
                                                         </div>
                                                         <div className=" ">
-
                                                             <div className="input-group">
                                                                 <span className="align-items-start">
-
-                                                                   
                                                                     <textarea type="text"
-                                                                        defaultValue={this.state.selectedItems[key].instruction}
-                                                                        
-                                                                        className="form-control bg-transparent mr-3"
-                                                                        style={{ maxHeight:"35px" }}
+                                                                        defaultValue={this.state.selectedItems[key].instruction}                                                                       
+                                                                        className="form-control bg-transparent"
+                                                                        style={{ maxHeight: "35px", marginLeft: "-0.9rem" }}
                                                                         placeholder={"Instruction"}
                                                                         onMouseLeave={(e) => this.setInstruction(key, e.target.value)}
                                                                         onBlur={(e) => this.setInstruction(key, e.target.value)}
                                                                     ></textarea>
-
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </form>
-                                                </CardImgOverlay>
-                                                
-
+                                                </CardImgOverlay>                                               
                                             </Card>
                                         </Col>
-
                                     )
                                 }
                             </Row>
@@ -345,7 +302,6 @@ export default class SelectedItem extends Component {
                                     <CardBody>
                                     <table className="table text-purple">
                                             <tbody>
-
                                                 <tr>
                                                     <td>
                                                         Total
@@ -357,7 +313,7 @@ export default class SelectedItem extends Component {
                                                 <tr>
                                                     <td colSpan="2">
                                                         <div className="mb-2">
-                                                            Special Instruction
+                                                            Special Instructions
                                                     <textarea className='form-control' onChange={(e) => this.setState({ instruction: e.target.value })}></textarea>
                                                         </div>
                                                         <div>
@@ -365,13 +321,11 @@ export default class SelectedItem extends Component {
                                                     <input type="text" className='form-control' required onChange={(e) => this.setState({ table: e.target.value })} />
                                                         </div>
                                                     </td>
-                                                </tr>
-
-                                                
+                                                </tr>                                                
                                             </tbody>
                                     </table>
                                     <div className="text-center form-group align-middle">
-                                        <button onClick={() => this.setState({ payType: "now" })} role="submit" className="btn btn-custom" >Proceed to checkout</button>
+                                        <button onClick={() => this.setState({ payType: "now" })} role="submit" className="btn btn-custom" >Proceed to Checkout</button>
                                     </div>
                                     <div className="text-center align-middle">
                                         <button onClick={() => this.setState({ payType:"later" })} role="submit" className="btn btn-warning" >Place Order & Pay Later</button>
@@ -381,7 +335,6 @@ export default class SelectedItem extends Component {
                             </form>
                         </Col>
                     </Row>
-
                 }
                 <PaymentModal />
             </>

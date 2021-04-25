@@ -27,7 +27,6 @@ const CreateReview = (props) => {
         menuItem.reviewCount = parseInt(menuItem.reviewCount) + 1;
         menuItem.avgRate = parseFloat((menuItem.reviewCount - 1) * menuItem.avgRate) + rate / parseFloat(menuItem.reviewCount)
         
-
         let itemReview = {
             "rate": rate,
             "comment": comment,
@@ -53,9 +52,7 @@ const CreateReview = (props) => {
             
         }).catch(function (error) {
             console.log(error.response);
-        })
-
-        
+        })       
     }
 
     return (
@@ -74,10 +71,8 @@ const CreateReview = (props) => {
                         </div>
                         <div className="clearfix"></div>
                         <div className=" form-group">
-
                             <div className="input-group">
                                 <span>
-
                                     <FontAwesomeIcon icon={faUser} />
                                     <input type="text"
                                         defaultValue={reviewer}
@@ -85,9 +80,7 @@ const CreateReview = (props) => {
                                         className="form-control"
                                         placeholder={"Your Name"}
                                         onChange={(e) => setReviewer( e.target.value )}
-
                                     />
-
                                 </span>
                             </div>
                         </div>
@@ -103,16 +96,13 @@ const CreateReview = (props) => {
                                         className="form-control"
                                         placeholder={"Your feedback"}
                                         onChange={(e) => setComment(e.target.value)}
-
                                     ></textarea>
-
                                 </span>
                             </div>
                         </div>
                         <div className="text-center custom">
                             <input type="submit" className="btn btn-outline-primary my-2 my-sm-0" value ='Submit Feedback' />
-                        </div>
-                        
+                        </div>                       
                     </form>
                 </Col>
             </Row>

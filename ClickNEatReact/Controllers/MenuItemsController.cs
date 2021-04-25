@@ -123,13 +123,7 @@ namespace ClickNEatReact.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-
             }
-
-
-            //Console.WriteLine(new Uri(filePath));
-            // Process uploaded files
-            // Don't rely on or trust the FileName property without validation.
 
             return Ok(new { size, url = filePath.Replace("wwwroot", "") });
         }

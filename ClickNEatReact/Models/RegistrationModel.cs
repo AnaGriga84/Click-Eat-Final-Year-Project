@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This class model the Registration object for the Register feature.
+    /// </summary>
     public class RegistrationModel
     {
         [Required(ErrorMessage = "Username is Required")]

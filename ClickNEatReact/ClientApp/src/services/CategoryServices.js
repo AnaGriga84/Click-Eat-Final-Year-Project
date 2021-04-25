@@ -2,30 +2,30 @@
 import axios from 'axios';
 
 
-class CategoryService {
-
-    getCategories() {
+class CategoryService
+{
+    getCategories()
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }
-
         return axios.get('/api/MenuCategories', config);
-
     }
 
-    insertCategory(category) {
+    insertCategory(category)
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }
         return axios.post('/api/MenuCategories', category, config);
-
     }
 
-    updateCategory(category) {
+    updateCategory(category)
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -33,10 +33,10 @@ class CategoryService {
         }
         //console.log(category);
         return axios.put('/api/MenuCategories/' + category.categoryId, category, config);
-
     }
 
-    DeleteCategory(categoryId) {
+    DeleteCategory(categoryId)
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -45,5 +45,4 @@ class CategoryService {
         return axios.delete('/api/MenuCategories/' + categoryId, config);
     }
 }
-
 export default new CategoryService();

@@ -40,8 +40,8 @@ const CreatePayment = (props) => {
                 // Handle error in creation of data collector
                 return;
             }
-            // At this point, you should access the dataCollectorInstance.deviceData value and provide it
-            // to your server, e.g. by injecting it into your form as a hidden input.
+            // At this point, I should access the dataCollectorInstance.deviceData value and provide it
+            // to the server, e.g. by injecting it into your form as a hidden input.
             var deviceData = dataCollectorInstance.deviceData;
 
 
@@ -86,15 +86,9 @@ const CreatePayment = (props) => {
                         expirationDate: {
                             selector: '#expiration-date',
                             placeholder: '10/2022'
-                        },
-                        postalCode: {
-                            selector: '#postal-code',
-                            placeholder: '10001'
                         }
                     }
                 },
-
-
                     function (hostedFieldsErr, hostedFieldsInstance) {
                         if (hostedFieldsErr) {
                             console.error(hostedFieldsErr);
@@ -109,10 +103,6 @@ const CreatePayment = (props) => {
                             var formIsInvalid = false;
                             var state = hostedFieldsInstance.getState();
 
-
-                            // Loop through the Hosted Fields and check
-                            // for validity, apply the is-invalid class
-                            // to the field container if invalid
                             Object.keys(state.fields).forEach(function (field) {
                                 if (!state.fields[field].isValid) {
                                     $(state.fields[field].container).addClass('is-invalid');
@@ -125,10 +115,6 @@ const CreatePayment = (props) => {
                                 alert("Card input is not valid");
                                 return;
                             }
-
-
-
-
                             hostedFieldsInstance.tokenize({
                                 cardholderName: $('#cc-name').val()
                             },
@@ -140,8 +126,6 @@ const CreatePayment = (props) => {
                                     }
 
                                     console.log(deviceData);
-                                    // If this was a real integration, this is where you would
-                                    // send the nonce to your server.
                                     console.log('Got a nonce: ' + payload.nonce);
 
                                     BraintreeService.payment({
@@ -152,8 +136,6 @@ const CreatePayment = (props) => {
                                         console.log(resp.data);
                                         var result = resp.data.result;
                                         makePayment(result);
-
-
                                     }).catch(function (error) {
                                         alert("Transaction failed");
                                         console.log(error.response);
@@ -162,29 +144,19 @@ const CreatePayment = (props) => {
                                 });
                         }, false);
                     });
-            });
-            
-            
+            });           
         }
 
         await window.braintree.client.create({
             authorization: authToken
         }, async function (err, clientInstance) {
             // Creation of any other components...
-
             await window.braintree.dataCollector.create({
                 client: clientInstance,
                 hostedFields: true
             }, (err, dataCollectorInstance) => getDeviceData(err, dataCollectorInstance));
-        });
-
-        
-
-        
+        });  
     }
-
-   
-
     const handleSubmit = (event) => {
         event.preventDefault();
         toggleModal(true);
@@ -213,13 +185,9 @@ const CreatePayment = (props) => {
                     "instruction": selecteditem.instruction
                 }
                 orderItems.push(orderItem);
-
             }
 
             console.log(orderItems);
-
-
-
         }
         var card = result.target.creditCard;
 
@@ -242,9 +210,9 @@ const CreatePayment = (props) => {
         console.log(payData);
         PaymentService.insertPayment(payData).then(function (resp) {
             console.log(resp);
-            setMsg(<><div>Order placed successfully!!</div>
-                <div>Your order will be served in a while!!</div>
-                <div><a href="/" className="text-decoration-none text-purple font-weight-bold">Go back to menu items</a></div></>);
+            setMsg(<><div>Order placed successfully</div>
+                <div>Your order will be served soon</div>
+                <div><a href="/" className="text-decoration-none text-purple font-weight-bold">Go back to see your order</a></div></>);
             setVisible(true);
             let orderIds = localStorage.getItem('orderIds') != undefined ? localStorage.getItem('orderIds') : "";
 
@@ -259,8 +227,6 @@ const CreatePayment = (props) => {
         });
 
     }
-
-
     const ConfirmModal = () => {
         return (
 
@@ -288,9 +254,6 @@ const CreatePayment = (props) => {
     const SuccessModal = () => {
         return (
             <Modal className={" rounded text-purple"} isOpen={visible} centered scrollable backdrop="static"  >
-                
-
-
                     <ModalBody>
                         <Alert color="info" className="text-center" isOpen={visible} toggle={() => window.location.href = "/orderHistory"}>
                             {msg}
@@ -298,24 +261,18 @@ const CreatePayment = (props) => {
                     </ModalBody>
                     <ModalFooter className="text-right">
                         <button onClick={() => window.location.href = "/orderHistory"} className="btn btn-custom" >OK</button>
-                    </ModalFooter>
-               
+                    </ModalFooter>              
             </Modal>
         )
     }
 
-
     return (
 
         <>
-            
-
-            <div className='demo-frame'>
-
-                
+            <div className='demo-frame'>               
                 <form id="paymentForm" method="post">
-                    <label className="hosted-fields--label" ><FontAwesomeIcon icon={faInfoCircle} size={"sm"} /> If any field is inaccessible press on field label to access it.</label>
-                    <label className="hosted-fields--label"  htmlFor="ammount">Ammount Total</label>
+                    <label className="hosted-fields--label" ><FontAwesomeIcon icon={faInfoCircle} size={"sm"} /> Please enter your card details</label>
+                    <label className="hosted-fields--label"  htmlFor="ammount">Total Amount</label>
                     <div className="hosted-field" style={{ paddingTop: '5px' }} id="ammount">
                         {total}<FontAwesomeIcon icon={faEuroSign} />
                     </div>
@@ -329,21 +286,16 @@ const CreatePayment = (props) => {
 
                     <label className="hosted-fields--label" style={{ cursor: "pointer" }} htmlFor="expiration-date">Expiration Date</label>
                     <div className="hosted-field" id="expiration-date"></div>
-                    <label className="hosted-fields--label" style={{ cursor: "pointer" }} htmlFor="postal-code">Postal Code</label>
-                    <div className="hosted-field" id="postal-code"></div>
 
                     <div className="text-center custom">
-                        <input type="submit" value="Pay and Place order" className="btn btn-outline-primary" />
+                        <input type="submit" value="Pay and Place the Order" className="btn btn-outline-primary" />
                     </div>
                 </form>
             </div>
             <ConfirmModal />
             <SuccessModal />
         </>
-
     )
-
-
 }
 
 export default CreatePayment;

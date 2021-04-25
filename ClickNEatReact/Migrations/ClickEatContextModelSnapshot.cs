@@ -173,6 +173,9 @@ namespace ClickNEatReact.Migrations
                     b.Property<int>("ReviewCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isVegan")
+                        .HasColumnType("bit");
+
                     b.HasKey("MenuItemId");
 
                     b.HasIndex("CategoryId");

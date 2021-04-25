@@ -16,6 +16,8 @@ import '../src/Assets/fontawesome/css/all.css';
 import OrderHistory from './components/Management/Order/OrderHistory';
 import SignUp from './components/SignUp';
 import Analytics from './components/Management/Analytics';
+import Customers from './components/Admin/Customers';
+import ChangePassword from './components/ChangePassword';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -60,11 +62,6 @@ export default class App extends Component {
         this.forceUpdate();
     }
 
-
-
-
-
-
     render() {
 
         const SignOut = () => {
@@ -76,21 +73,17 @@ export default class App extends Component {
             
             return (
                 <div>
-                    Signing Out...
+                    We are signing you out
                     {
                         window.location.href = '/'
                     }
                 </div>
                 )
-
         }
         
         return (
-
-            <Layout>
-                
+            <Layout>               
                 <AuthContext.Provider value={(this.state.type == 'admin' && this.state.loggedin)}>
-
                     <Switch>
                         <Route exact path='/'><Home selectMenuItem={this.selectMenuItem} /></Route>
                         <Route exact path='/signin' setType={this.setType} ><SignIn setType={this.setType} setLoggedIn={this.setLoggedIn} /></Route>
@@ -101,6 +94,7 @@ export default class App extends Component {
                         <PrivateRoute exact path='/category' component={Category} />
                         <PrivateRoute exact path='/menuItems' component={MenuItem} />
                         <PrivateRoute exact path='/waiters' component={Waiter} />
+                        <PrivateRoute exact path='/customers' component={Customers} />
                     </Switch>
                 </AuthContext.Provider>
                 <AuthContext.Provider value={((this.state.type == 'admin' || this.state.type == 'waiter') && this.state.loggedin)}>
@@ -109,9 +103,12 @@ export default class App extends Component {
                         <PrivateRoute exact path='/analytics' component={Analytics} />
                     </Switch>
                 </AuthContext.Provider>
-                    
+                <AuthContext.Provider value={(this.state.loggedin)}>
+                    <Switch>
+                        <PrivateRoute exact path='/changePassword' component={ChangePassword} />
+                    </Switch>
+                </AuthContext.Provider>
             </Layout>
-
         );
     }
 }

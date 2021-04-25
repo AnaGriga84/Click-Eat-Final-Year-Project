@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This class models the Payment object.
+    /// </summary>
     public class Payment
     {
         [Key]
@@ -25,7 +28,5 @@ namespace ClickNEatReact.Models
         [ForeignKey("OrderId")]
         [XmlIgnore, JsonIgnore]
         public virtual Order order { set; get; }
-
-
     }
 }

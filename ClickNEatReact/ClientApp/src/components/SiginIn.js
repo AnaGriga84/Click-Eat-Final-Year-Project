@@ -7,7 +7,6 @@ import Auth from '../services/Auth';
 import { error } from 'jquery';
 
 
-
 export class SignIn extends Component {
     static displayName = SignIn.name;
 
@@ -20,7 +19,6 @@ export class SignIn extends Component {
             password:"",
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
     validate() {
@@ -64,12 +62,8 @@ export class SignIn extends Component {
                     window.location.href = '/'
                 }
             }
-        }
-            
-        
-        
+        }        
     }
-
 
     render() {
         return (
@@ -85,10 +79,8 @@ export class SignIn extends Component {
                             <CardBody>
                                 <Form onSubmit={this.handleSubmit}>
                                     <div className=" form-group">
-
                                         <div className="input-group">
                                             <span>
-
                                                 <FontAwesomeIcon icon={faUser} />
                                                 <input type="text"
                                                     defaultValue={this.state.username}
@@ -96,18 +88,14 @@ export class SignIn extends Component {
                                                     className="form-control"
                                                     placeholder={"Username"}
                                                     onChange={(e) => this.setState({ username: e.target.value })}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
                                     <div className=" form-group">
-
                                         <div className="input-group">
                                             <span>
                                                 <FontAwesomeIcon icon={faLock} />
-
                                                 <input
                                                     defaultValue={this.state.password}
                                                     type="password"
@@ -122,14 +110,12 @@ export class SignIn extends Component {
                                     <div className=" form-group">
                                         <div className="custom">
                                             <button type={"submit"} disabled={!(this.state.username.length > 0 &&
-                                                this.state.password.length > 0)} className="btn btn-block btn-outline-primary" >{"Join In"}</button>
+                                                this.state.password.length > 0)} className="btn btn-block btn-outline-primary" >{"Login"}</button>
                                         </div>
                                     </div>
                                 </Form>
                             </CardBody>
-                        </Card>
-                        
-                        
+                        </Card>                                                
                     </Col>
                 </Row>
             </>

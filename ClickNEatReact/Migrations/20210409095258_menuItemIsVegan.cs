@@ -2,12 +2,12 @@
 
 namespace ClickNEatReact.Migrations
 {
-    public partial class menuMigration : Migration
+    public partial class menuItemIsVegan : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "Availability",
+                name: "isVegan",
                 table: "menuItems",
                 type: "bit",
                 nullable: false,
@@ -17,7 +17,7 @@ namespace ClickNEatReact.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Availability",
+                name: "isVegan",
                 table: "menuItems");
         }
     }

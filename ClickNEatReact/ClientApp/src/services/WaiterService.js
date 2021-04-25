@@ -1,8 +1,9 @@
 ﻿import axios from 'axios';
 
-class WaiterService {
-
-    PostWaiter(waiter) {
+class WaiterService
+{
+    PostWaiter(waiter)
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -11,7 +12,8 @@ class WaiterService {
         return axios.post('/api/Authentication/register/waiter', waiter, config);
     }
 
-    getWaiters() {
+    getWaiters()
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -19,7 +21,9 @@ class WaiterService {
         }
         return axios.get('/api/Authentication/users/waiters', config);
     }
-    deleteWaiter(username) {
+
+    deleteWaiter(username)
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -27,7 +31,5 @@ class WaiterService {
         }
         return axios.delete('/api/Authentication/user/' + username, config);
     }
-
 }
-
 export default new WaiterService();

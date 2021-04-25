@@ -1,12 +1,9 @@
-﻿import { faEnvelope, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
+﻿import { faEnvelope, faInfoCircle, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUser as faUserR } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { Card, CardBody, CardHeader, Col, Form, Row, Alert } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Form, Row, Alert, Tooltip } from 'reactstrap';
 import WaiterService from '../../../services/WaiterService';
-
-
-
 
 const CreateWaiter = (props) => {
     const [username, setUsername] = useState("");
@@ -18,6 +15,7 @@ const CreateWaiter = (props) => {
     const [email, setEmail] = useState("");
     const [alertMsg, setAlert] = useState('');
     const [alertOpen, showAlert] = useState(false);
+    const [isTooltipOpen, showTooltip] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -64,16 +62,13 @@ const CreateWaiter = (props) => {
                                                     className="form-control"
                                                     placeholder={"Username"}
                                                     onChange={(e) => setUsername(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
                                     <div className="col-12 mt-sm-0 mt-3 col-sm-6">
                                         <div className="input-group">
                                             <span>
-
                                                 <FontAwesomeIcon icon={faPhone} />
                                                 <input type="tel"
                                                     defaultValue={phone}
@@ -83,14 +78,10 @@ const CreateWaiter = (props) => {
                                                     className="form-control"
                                                     placeholder={"Phone no."}
                                                     onChange={(e) => setPhone(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <div className=" form-group row">
                                     <div className="col-12 col-sm-6">
@@ -104,9 +95,7 @@ const CreateWaiter = (props) => {
                                                     className="form-control"
                                                     placeholder={"First Name"}
                                                     onChange={(e) => setFN(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
@@ -121,17 +110,11 @@ const CreateWaiter = (props) => {
                                                     className="form-control"
                                                     placeholder={"Last Name"}
                                                     onChange={(e) => setLN(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
-                                    </div>
-
-                                    
-                                </div>
-                                
-                                
+                                    </div>                                   
+                                </div>                               
                                 <div className=" form-group row">
                                     <div className="col-12 col-sm-6">
                                         <div className="input-group">
@@ -141,24 +124,28 @@ const CreateWaiter = (props) => {
                                                 <input type="password"
                                                     defaultValue={password}
                                                     required
-                                                    className="form-control"
+                                                    className="form-control password"
                                                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
                                                     placeholder={"Password"}
                                                     onChange={(e) => setPass(e.target.value)}
                                                     title="[1]At least 1 Uppercase
-[2]At least 1 Lowercase
-[3]At least 1 Number
-[4]At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
-[5]Minimum 8 characters"
-                                                />
+                                                           [2]At least 1 Lowercase
+                                                           [3]At least 1 Number
+                                                           [4]At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
+                                                           [5]Minimum 8 characters"
+                                                 />
+                                                <FontAwesomeIcon icon={faInfoCircle} size={'lg'} onClick={() => showTooltip(!isTooltipOpen)} href="#" id="passwordRequirement" />
+                                                <Tooltip autohide={false} isOpen={isTooltipOpen} toggle={() => showTooltip(!isTooltipOpen)} placement="right" target="passwordRequirement">
 
+                                                    At least 1 Uppercase, At least 1 Lowercase, At least 1 Number, At least 1 Symbol, symbol allowed !@#$%^&*_=+- and minimum 8 characters
+                                                    
+                                            </Tooltip>
                                             </span>
                                         </div>
                                     </div>
                                     <div className="col-12 mt-sm-0 mt-3 col-sm-6">
                                         <div className="input-group">
                                             <span>
-
                                                 <FontAwesomeIcon icon={faLock} />
                                                 <input type="password"
                                                     defaultValue={conPass}
@@ -182,14 +169,10 @@ const CreateWaiter = (props) => {
                                             </span>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <div className=" form-group">
-
                                     <div className="input-group">
                                         <span>
-
                                             <FontAwesomeIcon icon={faEnvelope} />
                                             <input type="email"
                                                 defaultValue={email}
@@ -197,9 +180,7 @@ const CreateWaiter = (props) => {
                                                 className="form-control"
                                                 placeholder={"Email Address"}
                                                 onChange={(e) => setEmail(e.target.value)}
-
                                             />
-
                                         </span>
                                     </div>
                                 </div>
@@ -211,13 +192,10 @@ const CreateWaiter = (props) => {
                             </Form>
                         </CardBody>
                     </Card>
-
-
                 </Col>
             </Row>
         </div>
     )
-
 }
 
 export default CreateWaiter;

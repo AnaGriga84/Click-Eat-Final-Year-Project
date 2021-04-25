@@ -17,27 +17,32 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
-//using ClickNEatReact.Services;
 
 namespace ClickNEatReact
 {
     public class Startup
     {
+        /// <summary>
+        /// Startup.cs configures the application's services which proveds the application functionality.
+        /// Referenced from <a href="http://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup?view=aspnetcore-5.0"></a>
+        /// </summary>
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-            //new PayPalClient(configuration);
-           
+            Configuration = configuration;          
         }
 
+        ///<summary>
+        ///This method gets called by the runtime and is used to configure the HTTP request pipeline.
+        ///</summary>
+
+        ///<summary>
+        ///UseSwaggerUI - Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+        /// See <a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio"></a>
+        ///</summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            
-
             services.AddControllersWithViews();
                 
             services.AddDbContext<ClickEatContext>(options =>
@@ -122,9 +127,6 @@ namespace ClickNEatReact
                 app.UseHsts();
             }
 
-
-            
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -142,15 +144,15 @@ namespace ClickNEatReact
             });
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
+            ///<summary>
+            ///AddSwaggerGen - Swagger generator added to the services collection. Used for API documentation.
+            ///Inspired from <a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio"></a>
+            ///</summary>
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Click & Eat API V1");
                 c.RoutePrefix = "docs";
             });
-
-            
 
             app.UseSpa(spa =>
             {
@@ -160,9 +162,7 @@ namespace ClickNEatReact
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
-            });
-
-            
+            });            
         }
     }
 }

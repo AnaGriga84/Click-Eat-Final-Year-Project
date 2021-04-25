@@ -29,8 +29,6 @@ namespace ClickNEatReact.Controllers
         {
             var orderItems=await _context.OrderItems.Include(o=>o.MenuItem).ThenInclude(m=>m.MenuCategory).Include(o=>o.Order).ToListAsync();
 
-            
-
             return orderItems;
         }
 

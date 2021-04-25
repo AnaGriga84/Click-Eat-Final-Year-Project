@@ -2,15 +2,16 @@
 import axios from 'axios';
 
 
-class BraintreeService {
-
-    getToken() {
+class BraintreeService
+{
+    getToken()
+    {
         return axios.get('/api/Braintree');
     }
 
-    payment(data) {
+    payment(data)
+    {
         return axios.post('/api/Braintree', data);
     }
 }
-
 export default new BraintreeService();

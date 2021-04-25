@@ -81,8 +81,6 @@
     border: none !important;
 }
 
-
-
 .input-group button{
     color: #5D006B;
     background-color: white;
@@ -361,8 +359,13 @@ body {
 }
 
 .form-control.qty{
-    min-width:60% !important;
+    min-width:85% !important;
     width:60%
+}
+
+.form-control.password {
+    min-width: 85% !important;
+    width: 50%
 }
 /* width */
 /*::-webkit-scrollbar {*/
@@ -431,4 +434,19 @@ li.active{
 
 .bg-semi-transparent {
     background-color: rgba(255,255,255,.4) !important;
+}
+
+.badge-spacing{
+    top: -15px !important;
+}
+
+.home-menu-view {
+     height: calc(100vh - 115px);
+     overflow-x: hidden;
+     overflow-y: auto
+}
+@media (max-width: 767.98px) {
+    .home-menu-view {
+        height: calc(100vh - 160px);
+    }
 }

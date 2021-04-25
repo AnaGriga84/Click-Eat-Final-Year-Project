@@ -9,6 +9,10 @@ using System.Xml.Serialization;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This is the model class which models the data for the 
+    /// review feature in the application. It mirrors a database table.
+    /// </summary>
     public class ItemReview
     {
         [Key]

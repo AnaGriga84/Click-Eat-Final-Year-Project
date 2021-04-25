@@ -2,28 +2,25 @@
 import axios from 'axios';
 
 
-class OrderService {
-
-    getOrders() {
+class OrderService
+{
+    getOrders()
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }
-
         return axios.get('/api/Orders', config);
-
     }
 
-    getOrder(orderId) {
-        
-
+    getOrder(orderId)
+    {
         return axios.get('/api/Orders/' + orderId);
-
     }
 
-    getOrderByIds(ids) {
-        
+    getOrderByIds(ids)
+    {       
         var data = JSON.stringify(ids);
 
         var config = {
@@ -35,25 +32,21 @@ class OrderService {
             },
             data: data
         };
-
         return axios(config);
     }
 
-    insertOrder(order) {
-        
+    insertOrder(order)
+    {       
         return axios.post('/api/Orders', order);
-
     }
-    updateOrderToAddItem(order) {
 
-       
-        //console.log(category);
+    updateOrderToAddItem(order)
+    {
         return axios.put('/api/orders/' + order.orderId +'/addItems', order);
-
     }
 
-    updateOrder(order) {
-
+    updateOrder(order)
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -61,10 +54,10 @@ class OrderService {
         }
         //console.log(category);
         return axios.put('/api/orders/' + order.orderId, order, config);
-
     }
 
-    //DeleteCategory(categoryId) {
+    //DeleteCategory(categoryId) 
+    //{
     //    var config = {
     //        headers: {
     //            'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -73,5 +66,4 @@ class OrderService {
     //    return axios.delete('/api/MenuCategories/' + categoryId, config);
     //}
 }
-
 export default new OrderService();

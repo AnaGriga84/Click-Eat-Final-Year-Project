@@ -57,16 +57,7 @@ class Analytics extends Component {
     for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
     }
-
-    //Old Code
-    //write the ArrayBuffer to a blob,  done
-    //var bb = new BlobBuilder();
-    //bb.append(ab);
-    //return bb.getBlob(mimeString);
-
-    //New Code
     return new Blob([ab], { type: mimeString });
-
 
     }
 
@@ -83,8 +74,6 @@ class Analytics extends Component {
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth / pageNo, (height < pdfHeight ? height : pdfHeight));
             pdf.save("download.pdf");
         });
-
-
     }
 
     render() {
@@ -121,7 +110,6 @@ class Analytics extends Component {
                                 </tr>
                             </thead>
                             <tbody >
-
                                 {
                                     this.state.sales.map(sale =>
                                         < >
@@ -151,10 +139,7 @@ class Analytics extends Component {
                 </Row>
 
             </div>
-
-
         );
     }
-
 }
 export default Analytics;

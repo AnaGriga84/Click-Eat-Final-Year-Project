@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// User data inherits from IdentityUser and thus is supported.
+    /// </summary>
+
     public class ApplicationUser:IdentityUser
     {
         [PersonalData]

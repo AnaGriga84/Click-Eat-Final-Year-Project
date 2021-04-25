@@ -27,8 +27,7 @@ namespace ClickNEatReact.Controllers
                 MerchantId = _configuration["Braintree:MerchantId"],
                 PublicKey = _configuration["Braintree:PublicKey"],
                 PrivateKey = _configuration["Braintree:PrivateKey"]
-            };
-            
+            };        
         }
 
         [HttpGet]
@@ -59,7 +58,5 @@ namespace ClickNEatReact.Controllers
 
             return Ok(new { result=result });
         }
-
-
     }
 }

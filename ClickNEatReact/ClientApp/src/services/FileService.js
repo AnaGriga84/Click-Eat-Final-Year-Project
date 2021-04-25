@@ -1,9 +1,9 @@
 ﻿import axios from 'axios';
 
-
-
-class FileService {
-    postImage(file) {
+class FileService
+{
+    postImage(file)
+    {
         var data = new FormData();
         data.append('file', file);
 
@@ -16,6 +16,4 @@ class FileService {
         return axios(config);
     }
 }
-
-
 export default new FileService();

@@ -2,43 +2,39 @@
 import axios from 'axios';
 
 
-class PaymentService {
-
+class PaymentService
+{
     getPayments() {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }
-
         return axios.get('/api/Payments', config);
-
     }
 
-    getSalesByPeriod(period) {
+    getSalesByPeriod(period)
+    {
         var config = {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }
-
         return axios.get('/api/Payments/period/' + period, config);
-
     }
 
-    insertPayment(payment) {
-        
+    insertPayment(payment)
+    {        
         return axios.post('/api/Payments', payment);
-
     }
 
-    insertDuePayment(payment) {
-        
+    insertDuePayment(payment)
+    {       
         return axios.post('/api/Payments/DuePayment', payment);
-
     }
 
-    //updateCategory(category) {
+    //updateCategory(category) 
+    //{
     //    var config = {
     //        headers: {
     //            'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -49,7 +45,8 @@ class PaymentService {
 
     //}
 
-    //DeletePayment(paymentId) {
+    //DeletePayment(paymentId) 
+    // {
     //    var config = {
     //        headers: {
     //            'Authorization': 'Bearer ' + localStorage.getItem('token')

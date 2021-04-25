@@ -1,4 +1,4 @@
-﻿import { faAlignJustify, faBiohazard, faDrumstickBite, faEuroSign, faImage, faTag, faUser, faUtensils } from '@fortawesome/free-solid-svg-icons';
+﻿import { faAlignJustify, faBiohazard, faDrumstickBite, faEuroSign, faImage, faSeedling, faTag, faUser, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component, useEffect, useState } from 'react';
 import { Alert, Card, CardBody, CardHeader, Col, Form, Row, Button, ButtonGroup } from 'reactstrap';
@@ -19,6 +19,7 @@ function EditMenuItem(props) {
     const [imgPath, setImgPath] = useState(props.menu.imgPath);
     const [categoryId, setCategoryId] = useState(props.menu.categoryId);
     const [imgFile, setImgeFile] = useState(null);
+    const [isVegan, setVegan] = useState(props.menu.isVegan);
     const [availability, setAvailability] = useState(props.menu.availability);
     const [allergens, setAllergens] = useState(props.menu.allergens);
 
@@ -49,23 +50,15 @@ function EditMenuItem(props) {
         menuItem.categoryId = categoryId;
         menuItem.allergens = allergens;
         menuItem.menuCategory = null;
-        
-
-        
-
+        menuItem.isVegan = isVegan;
+       
         MenuItemService.updateMenuItem(menuItem).then(function (resp) {
             console.log(resp)
             window.location.reload(false);
         }).catch(function (error) {
             console.log(error.response);
         });
-
-
-
-
     }
-
-
 
     const processFile = (e) => {
         setImgeFile(e.target.files[0]);
@@ -103,10 +96,7 @@ function EditMenuItem(props) {
                                                 placeholder={"Name"}
 
                                                 onChange={(e) => setName(e.target.value)}
-
-
                                             />
-
                                         </span>
                                     </div>
                                 </div>
@@ -142,9 +132,7 @@ function EditMenuItem(props) {
                                                 className="form-control "
                                                 placeholder={"Price"}
                                                 onChange={(e) => setPrice(e.target.value)}
-
                                             />
-
                                         </span>
                                     </div>
                                 </div>
@@ -186,7 +174,21 @@ function EditMenuItem(props) {
                                         </span>
                                     </div>
                                 </div>
+                                <div className=" form-group">
 
+                                    <div className="input-group">
+                                        <span>
+                                            <FontAwesomeIcon icon={faSeedling} />
+
+                                            <ButtonGroup required className={"custom btn-block mr-2 ml-2 rounded"}>
+                                                <Button role="radio" className="btn btn-outline-primary border" onClick={() => setVegan(false)} active={isVegan === false}>Non Veg</Button>
+                                                <Button role="radio" className="btn btn-outline-primary border" onClick={() => setVegan(true)} active={isVegan === true}>Veg</Button>
+
+                                            </ButtonGroup>
+
+                                        </span>
+                                    </div>
+                                </div>
                                 <div className=" form-group">
 
                                     <div className="input-group">
@@ -200,10 +202,7 @@ function EditMenuItem(props) {
                                                 placeholder={"Allergens"}
 
                                                 onChange={(e) => setAllergens(e.target.value)}
-
-
                                             />
-
                                         </span>
                                     </div>
                                 </div>
@@ -235,8 +234,6 @@ function EditMenuItem(props) {
                                             && imgPath.trim().length > 0
                                             && categoryId != ""
                                             && allergens.trim().length > 0)} className="btn btn-block btn-outline-primary" >{"Save Menu Item"}</button>
-
-
                                     </div>
                                 </div>
                             </Form>
@@ -247,7 +244,6 @@ function EditMenuItem(props) {
                 </Col>
             </Row>
         </div>
-
     )
 }
 

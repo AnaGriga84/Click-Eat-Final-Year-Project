@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This class models the data for the Order object will all necessary attributes.
+    /// </summary>
     public class Order
     {
         [Key]
@@ -21,6 +24,5 @@ namespace ClickNEatReact.Models
         public string Status { set; get; }
         [XmlIgnore, JsonIgnore]
         public virtual ICollection<OrderItem> OrderItems { set; get; }
-
     }
 }

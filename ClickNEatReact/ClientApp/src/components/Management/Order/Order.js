@@ -14,7 +14,6 @@ class Orders extends Component {
         this.serveOrder = this.serveOrder.bind(this);
     }
 
-
     componentDidMount() {
         this.getOrders();
     }
@@ -39,15 +38,11 @@ class Orders extends Component {
                 if (orders[i].status != "Served") {
 
                     self.state.current.push(orders[i]);
-
-
                 }
             }
         }).catch(function (error) {
             console.log(error);
         });
-
-
 
         await this.setState({ current: this.state.current });
         //console.log(this.state.current.length);
@@ -64,7 +59,7 @@ class Orders extends Component {
                                 Current Orders
                             </CardHeader>
                             <CardBody>
-                                {this.state.current.length == 0 ? "There are no orders currently !!!" :
+                                {this.state.current.length == 0 ? "There is no orders currently!!" :
 
                                     <Row>
                                         {
@@ -79,7 +74,6 @@ class Orders extends Component {
                                                                         <><em>Instruction:</em> {order.instruction}<br /></>
                                                                     }
                                                                     <em>Status:</em> {order.status}
-
                                                                 </div>
                                                                 <div className="col-6 align-middle custom d-flex justify-content-end align-content-center">
                                                                     <button onClick={() => this.serveOrder(order)} className="btn btn-outline-primary">Mark as served</button>
@@ -109,11 +103,9 @@ class Orders extends Component {
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
-
                                             )
                                         }
                                     </Row>
-
                                 }
                             </CardBody>
                         </Card>
@@ -155,7 +147,7 @@ class Orders extends Component {
                     //                                                                <CardImg src={orderItem.menuItem.imgPath} className="h-100" style={{ objectFit: "cover" }} />
                     //                                                                <CardImgOverlay className='text-center'>
                     //                                                                    <CardTitle className="bg-light mt-auto mb-auto">{orderItem.menuItem.name}</CardTitle>
-                    //                                                                    <CardText className="bg-light">Quanitity:  {orderItem.itemAmmount}</CardText>
+                    //                                                                    <CardText className="bg-light">Quantity:  {orderItem.itemAmmount}</CardText>
                     //                                                                </CardImgOverlay>
                     //                                                            </Card>
                     //                                                        </Col>

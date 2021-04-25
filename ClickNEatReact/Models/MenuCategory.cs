@@ -10,6 +10,10 @@ using System.Xml.Serialization;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This model represents the attributes used for storing and 
+    /// retreving MenuCategory data from and in the database.
+    /// </summary>
     public class MenuCategory
     {
         [Key]

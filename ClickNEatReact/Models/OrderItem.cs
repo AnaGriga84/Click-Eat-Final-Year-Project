@@ -10,6 +10,9 @@ using System.Xml.Serialization;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This class models the OrderItem object in the database.
+    /// </summary>
     public class OrderItem
     {
         [Key]

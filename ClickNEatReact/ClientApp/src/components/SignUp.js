@@ -1,11 +1,9 @@
-﻿import { faEnvelope, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
+﻿import { faEnvelope, faInfoCircle, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUser as faUserR } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { Card, CardBody, CardHeader, Col, Form, Row, Alert } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Form, Row, Alert, Tooltip, UncontrolledTooltip, ListGroup, ListGroupItem } from 'reactstrap';
 import UserService from '../services/UserService';
-
-
 
 
 const SignUp = (props) => {
@@ -18,6 +16,7 @@ const SignUp = (props) => {
     const [email, setEmail] = useState("");
     const [alertMsg, setAlert] = useState('');
     const [alertOpen, showAlert] = useState(false);
+    const [isTooltipOpen, showTooltip] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,9 +64,7 @@ const SignUp = (props) => {
                                                     className="form-control"
                                                     placeholder={"Username"}
                                                     onChange={(e) => setUsername(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
@@ -84,20 +81,15 @@ const SignUp = (props) => {
                                                     className="form-control"
                                                     placeholder={"Phone no."}
                                                     onChange={(e) => setPhone(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <div className=" form-group row">
                                     <div className="col-12 col-sm-6">
                                         <div className="input-group">
                                             <span>
-
                                                 <FontAwesomeIcon icon={faUserR} />
                                                 <input type="text"
                                                     defaultValue={firstname}
@@ -105,9 +97,7 @@ const SignUp = (props) => {
                                                     className="form-control"
                                                     placeholder={"First Name"}
                                                     onChange={(e) => setFN(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
@@ -122,17 +112,11 @@ const SignUp = (props) => {
                                                     className="form-control"
                                                     placeholder={"Last Name"}
                                                     onChange={(e) => setLN(e.target.value)}
-
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
-
-
                                 </div>
-
-
                                 <div className=" form-group row">
                                     <div className="col-12 col-sm-6">
                                         <div className="input-group">
@@ -142,24 +126,26 @@ const SignUp = (props) => {
                                                 <input type="password"
                                                     defaultValue={password}
                                                     required
-                                                    className="form-control"
+                                                    className="form-control password"
                                                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
                                                     placeholder={"Password"}
                                                     onChange={(e) => setPass(e.target.value)}
-                                                    title="[1]At least 1 Uppercase
-[2]At least 1 Lowercase
-[3]At least 1 Number
-[4]At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
-[5]Minimum 8 characters"
+                                                    title=" [1]At least 1 Uppercase
+                                                            [2]At least 1 Lowercase
+                                                            [3]At least 1 Number
+                                                            [4]At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
+                                                            [5]Minimum 8 characters"
                                                 />
-
+                                                <FontAwesomeIcon size={'lg'} icon={faInfoCircle} onClick={() => showTooltip(!isTooltipOpen)} href="#" id="passwordRequirement" />
+                                                <Tooltip autohide={false} isOpen={isTooltipOpen} toggle={() => showTooltip(!isTooltipOpen)} placement="right" target="passwordRequirement">
+                                                    At least 1 Uppercase, At least 1 Lowercase, At least 1 Number, At least 1 Symbol, symbol allowed !@#$%^&*_=+- and minimum 8 characters
+                                                </Tooltip>
                                             </span>
                                         </div>
-                                    </div>
+                                    </div>                                   
                                     <div className="col-12 mt-sm-0 mt-3 col-sm-6">
                                         <div className="input-group">
                                             <span>
-
                                                 <FontAwesomeIcon icon={faLock} />
                                                 <input type="password"
                                                     defaultValue={conPass}
@@ -171,7 +157,6 @@ const SignUp = (props) => {
                                                         if (password !== conPass) {
                                                             setAlert("Password doesn't match");
                                                             showAlert(true);
-
                                                         }
                                                         else {
                                                             setAlert("");
@@ -179,18 +164,13 @@ const SignUp = (props) => {
                                                         }
                                                     }}
                                                 />
-
                                             </span>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <div className=" form-group">
-
                                     <div className="input-group">
                                         <span>
-
                                             <FontAwesomeIcon icon={faEnvelope} />
                                             <input type="email"
                                                 defaultValue={email}
@@ -198,27 +178,22 @@ const SignUp = (props) => {
                                                 className="form-control"
                                                 placeholder={"Email Address"}
                                                 onChange={(e) => setEmail(e.target.value)}
-
                                             />
-
                                         </span>
                                     </div>
                                 </div>
                                 <div className=" form-group">
                                     <div className="custom">
-                                        <button type={"submit"} disabled={!(password === conPass)} className="btn btn-block btn-outline-primary" >{"Sign Up"}</button>
+                                        <button type={"submit"} disabled={!(password === conPass)} className="btn btn-block btn-outline-primary" >{"Register"}</button>
                                     </div>
                                 </div>
                             </Form>
                         </CardBody>
                     </Card>
-
-
                 </Col>
             </Row>
         </div>
     )
-
 }
 
 export default SignUp;

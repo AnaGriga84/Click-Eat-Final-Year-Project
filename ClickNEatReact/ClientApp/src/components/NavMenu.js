@@ -19,9 +19,6 @@ export class NavMenu extends Component {
             type: (localStorage.getItem('type') == 'user' || localStorage.getItem('type') == 'admin' || localStorage.getItem('type') == 'waiter') ? localStorage.getItem('type').toString() : 'guest',
         };
     }
-
-    
-
     toggleNavbar() {
         this.setState({
             collapsed: !this.state.collapsed
@@ -34,19 +31,32 @@ export class NavMenu extends Component {
                 <Navbar id="nav" color="dark" className="shadow-custom" sticky="top" expand="sm" dark>
                     <Container>
                         <NavbarBrand className="text-white" tag={Link} to="/">Click&Eat</NavbarBrand>
-                        
+
                         <NavbarToggler onClick={this.toggleNavbar} className="mr-0 ml-auto" />
                         <Collapse isOpen={!this.state.collapsed} navbar>
                             <Nav className="mr-0 ml-auto" navbar>
+                                <NavItem>
+                                    <Link tag={Link} className="nav-link text-white" to="/">Home</Link>
+                                </NavItem>
                                 {(this.state.type == 'admin' || this.state.type == 'waiter') && (<>
                                     <NavItem>
                                         <Link tag={Link} className="nav-link text-white" to="/Analytics">Analytics</Link>
                                     </NavItem>
                                     {
                                         this.state.type == 'admin' &&
-                                        <NavItem>
-                                            <Link tag={Link} className="nav-link text-white" to="/waiters">Accounts</Link>
-                                        </NavItem>
+                                        <UncontrolledDropdown nav>
+                                            <DropdownToggle className="text-white" nav caret>
+                                                Accounts
+                                                </DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem>
+                                                    <Link tag={Link} className="nav-link text-dark" to="/waiters">Waiters</Link>
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                    <Link tag={Link} className="nav-link text-dark" to="/customers">Customers</Link>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
                                     }
                                     <div>
                                         {this.state.type == 'admin' &&
@@ -56,7 +66,6 @@ export class NavMenu extends Component {
                                                     Management
                                                 </DropdownToggle>
                                                 <DropdownMenu>
-
                                                     <DropdownItem>
                                                         <Link className="text-dark nav-link" to="/category">Menu Category</Link>
                                                     </DropdownItem>
@@ -66,11 +75,8 @@ export class NavMenu extends Component {
                                                     <DropdownItem>
                                                         <Link className=" text-dark nav-link" to="/orders">Orders</Link>
                                                     </DropdownItem>
-
-
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
-
                                         }
                                         {
                                             this.state.type == 'waiter' &&
@@ -79,25 +85,33 @@ export class NavMenu extends Component {
                                     </div>
                                 </>)
                                 }
-                                {(this.state.type == 'user' || this.state.type == 'guest') &&
-                                    <NavItem>
-                                        <Link tag={Link} className="nav-link text-white" to="/">Home</Link>
-                                    </NavItem>
-                                }
-
                                 {!this.state.loggedIn && (
                                     <>
-                                        
+
                                         < NavItem >
-                                            <Link tag={Link} className="nav-link text-white" to="/signin">Signin</Link>
+                                            <Link tag={Link} className="nav-link text-white" to="/signup">Register</Link>
+                                        </NavItem>
+                                        < NavItem >
+                                            <Link tag={Link} className="nav-link text-white" to="/signin">Login</Link>
                                         </NavItem>
 
                                     </>
                                 )}
-                                {this.state.loggedIn && < NavItem >
-                                    <Link tag={Link} className="nav-link text-white" to="/signout">Log Out</Link>
-                                </NavItem>}
-
+                                {this.state.loggedIn &&
+                                    <UncontrolledDropdown nav>
+                                        <DropdownToggle className="text-white" nav caret>
+                                            My Account
+                                                </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem >
+                                                <Link tag={Link} className="nav-link text-dark" to="/changePassword">Change Password</Link>
+                                            </DropdownItem>
+                                            <DropdownItem >
+                                                <Link tag={Link} className="nav-link text-dark" to="/signout">Logout</Link>
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
+                                }
                             </Nav>
                         </Collapse>
                         {!(this.state.type == 'admin' || this.state.type == 'waiter') && <span >
@@ -107,13 +121,11 @@ export class NavMenu extends Component {
                                     </span>
                                 </DropdownToggle>
                                 <DropdownMenu right>
-
                                     <DropdownItem>
                                         <Link tag={Link} to='/dish' className="text-purple nav-link font-weight-bold" >
                                             <FontAwesomeIcon className="text-purple" /*icon={faUtensils} size={"lg"}*/ /> Selected Items <span className="badge text-white bg-dark badge-pill border small badge-light" >{localStorage.getItem('dishItemCount') != undefined ? localStorage.getItem('dishItemCount') : 0}
                                             </span>
                                         </Link>
-
                                     </DropdownItem>
                                     <DropdownItem>
                                         <Link tag={Link} to='/orderHistory' className="text-purple nav-link font-weight-bold" >
@@ -124,17 +136,12 @@ export class NavMenu extends Component {
                                                 </>
                                             }
                                         </Link>
-
-
                                     </DropdownItem>
-
-
-
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </span>
                         }
-                        
+
                     </Container>
                 </Navbar>
             </>

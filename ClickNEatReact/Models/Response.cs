@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace ClickNEatReact.Models
 {
+    /// <summary>
+    /// This class models the Response status codes 
+    /// and the title of the responses for the authentication purposes.
+    /// </summary>
     public class Response
     {
         public string status { set; get; }

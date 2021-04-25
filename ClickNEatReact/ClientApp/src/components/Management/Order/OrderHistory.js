@@ -1,12 +1,10 @@
 ﻿import React, { Component } from "react";
 import OrderService from "../../../services/OrderService";
-import { Badge, Button, Card, CardBody, CardHeader, CardImg, CardImgOverlay, CardText, CardTitle, Col, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
+import { Badge, Button, Card, CardBody, CardHeader, CardImg, CardImgOverlay, CardText, CardTitle, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import DuePayment from "../Payment/DuePayment";
 import { Link } from "react-router-dom";
 import BraintreeService from "../../../services/BraintreeService";
 import CreateReview from "../Review/CreateReview";
-
-
 
 
 class OrderHistory extends Component {
@@ -83,11 +81,7 @@ class OrderHistory extends Component {
         }).catch(function (error) {
             console.log(error.response);
         });
-
-
     }
-
-    
 
     async payNow(order) {
         console.log(order);
@@ -110,8 +104,6 @@ class OrderHistory extends Component {
         this.toggleFeedbackModal();
 
     }
-
-
 
     toggleModal() {
         this.setState({ isOpen: !this.state.isOpen });
@@ -167,19 +159,23 @@ class OrderHistory extends Component {
         const LoginOrRegistrationModal = () => {
             return (
                 <Modal className={" rounded text-purple"} isOpen={this.state.isLoginOrRegistrationModalOpen} toggle={() => this.setState({ isLoginOrRegistrationModalOpen: !this.state.isLoginOrRegistrationModalOpen })} centered scrollable >
-
+                    <ModalHeader toggle={this.isLoginOrRegistrationModalOpen}>
+                        <h3> </h3>
+                    </ModalHeader>
                     <ModalBody style={{ overflowX: "hidden", overflowY: "auto" }}>
-                        <a href="/signin" className="btn btn-success text-white btn-block">Sign In</a>
+                        <a href="/signin" className="btn btn-custom text-white btn-block">Sign In</a>
                         <div className="text-center textf-purple">
                             -- OR --
                         </div>
-                        <a href="/signup" className="btn btn-success text-white btn-block">Create an account</a>
+                        <a href="/signup" className="btn btn-custom text-white btn-block">Create an account</a>
                     </ModalBody>
+                    <ModalFooter className="text-left">
+                        <button onClick={() => this.setState({ isLoginOrRegistrationModalOpen: !this.state.isLoginOrRegistrationModalOpen })} className="btn btn-danger">Close</button>
+                    </ModalFooter>
 
                 </Modal>
             )
         }
-
 
         return (
 
@@ -191,8 +187,7 @@ class OrderHistory extends Component {
                                 Current Orders
                             </CardHeader>
                             <CardBody>
-                                {this.state.current.length == 0 ? "There are no orders currently !!!" :
-
+                                {this.state.current.length == 0 ? "There is no orders currently!!" :
                                     <Row>
                                         {
                                             this.state.current.map(order =>
@@ -237,11 +232,9 @@ class OrderHistory extends Component {
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
-
                                             )
                                         }
                                     </Row>
-
                                 }
                             </CardBody>
                         </Card>
@@ -299,11 +292,9 @@ class OrderHistory extends Component {
                                                     </CardBody>
                                                 </Card>
                                             </Col>
-
                                         )
                                         }
                                     </Row>
-
                                 }
                             </CardBody>
                         </Card>
@@ -312,11 +303,8 @@ class OrderHistory extends Component {
                 <PaymentModal />
                 <FeedbackModal />
                 <LoginOrRegistrationModal />
-
             </div>
-
         );
-
     }
 }
 
