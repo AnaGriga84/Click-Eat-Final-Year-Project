@@ -10,8 +10,8 @@
 * Braintree Payment Gateway
 
 ## <u> Front-End </u>
-* ReactJS (JSX)
-* JavaScript
+* ReactJS 
+* JavaScript (JSX)
 * Axios
 
 ## **Prerequisites**
