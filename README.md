@@ -1,6 +1,6 @@
 # Web Application with ASP.NET Core and ReactJS 
-> ## Click & Eat is a web application for the restaurant sector which greatly simplifies the ordering and payment of the meals for both customers and the restaurant. 
-____
+> ### Click & Eat is a web application for the restaurant sector which greatly simplifies the ordering and payment of the meals for both customers and the restaurant. 
+
 ## **Languages and Technologies**
 ## <u> Back-End </u>
 * ASP.NET Core Web API
@@ -25,3 +25,4 @@ ____
 * Create a new project in Visual Studio
 * Select web application type of project
 * Select ReactJS template
+* Install all necessary packages using the NuGet Packet Manager
