@@ -4,6 +4,7 @@
 ## **Languages and Technologies**
 ## <u> Back-End </u>
 * ASP.NET Core Web API
+* C#
 * SQL
 * Entity Framework Core
 * JSON Web Token
